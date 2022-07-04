@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+import '/screens/database_screens/add_pharmacy.dart';
+import '/screens/database_screens/pharmacy_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
+import '../widgets/my_tab_bar.dart';
 
 class PharmacyScreen extends StatelessWidget {
   static const routeName = '/pharmacy_screen';
@@ -37,6 +40,13 @@ class PharmacyScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
+                        const MyTabBar(2, [
+                          'Pharmacies list',
+                          'Add Pharmacy',
+                        ], [
+                          PharmacyList(),
+                          AddPharmacy(),
+                        ]),
                       ],
                     ),
                   ),

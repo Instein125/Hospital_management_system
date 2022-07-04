@@ -27,7 +27,8 @@ class MainScreen extends StatelessWidget {
                 children: [
                   const TopBar('Dashboard'),
                   Container(
-                    decoration: const BoxDecoration(color: Color(0xff9DABAF)),
+                    decoration: const BoxDecoration(
+                        color: Color.fromRGBO(59, 123, 202, 0.5)),
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height - 70,
                     child: Stack(

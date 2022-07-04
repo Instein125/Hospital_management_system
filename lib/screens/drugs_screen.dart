@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+import '/screens/database_screens/add_drug.dart';
+import '/screens/database_screens/drugs_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
+import '../widgets/my_tab_bar.dart';
 
 class DrugsScreen extends StatelessWidget {
   static const routeName = '/drugs_screen';
@@ -37,6 +40,13 @@ class DrugsScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
+                        const MyTabBar(2, [
+                          'Drugs list',
+                          'Add drug',
+                        ], [
+                          DrugsList(),
+                          AddDrug(),
+                        ]),
                       ],
                     ),
                   ),

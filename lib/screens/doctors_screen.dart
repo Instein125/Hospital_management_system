@@ -2,6 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+import '/screens/database_screens/add_doctor.dart';
+import '/screens/database_screens/doctors_list_screen.dart';
+import '/screens/database_screens/manage_your_patients.dart';
+import '../widgets/my_tab_bar.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
 
@@ -37,6 +41,15 @@ class DoctorsScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
+                        const MyTabBar(3, [
+                          'Doctors list',
+                          'Add doctors',
+                          'Manage your patients'
+                        ], [
+                          DoctorsList(),
+                          AddDoctor(),
+                          ManageYourPatients(),
+                        ]),
                       ],
                     ),
                   ),

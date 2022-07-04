@@ -12,37 +12,44 @@ class DashboardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: selectedFunction,
-      borderRadius: BorderRadius.circular(20),
-      splashColor: Theme.of(context).primaryColor,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Theme.of(context).accentColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            icon == Icons.abc
-                ? Image.asset(
-                    image,
-                    color: Colors.white54,
-                    height: 45,
-                  )
-                : Icon(
-                    icon,
-                    size: 50,
-                    color: Colors.white54,
-                  ),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 35,
-                color: Colors.white,
+    return Card(
+      elevation: 20,
+      shadowColor: Color.fromARGB(175, 0, 55, 57),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: InkWell(
+        onTap: selectedFunction,
+        borderRadius: BorderRadius.circular(20),
+        splashColor: Theme.of(context).primaryColor,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Theme.of(context).accentColor,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon == Icons.abc
+                  ? Image.asset(
+                      image,
+                      color: Colors.white,
+                      height: 45,
+                    )
+                  : Icon(
+                      icon,
+                      size: 50,
+                      color: Colors.white,
+                    ),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 35,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
