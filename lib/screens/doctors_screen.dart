@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '/screens/database_screens/add_doctor.dart';
+import '/screens/database_screens/add_screen.dart';
 import '/screens/database_screens/doctors_list_screen.dart';
 import '/screens/database_screens/manage_your_patients.dart';
 import '../widgets/my_tab_bar.dart';
@@ -12,7 +12,11 @@ import '/widgets/top_bar.dart';
 class DoctorsScreen extends StatelessWidget {
   static const routeName = '/doctors_screen';
   final int selectedIndex;
-  const DoctorsScreen(this.selectedIndex);
+  final nameController = TextEditingController();
+  final specialityController = TextEditingController();
+  final experienceController = TextEditingController();
+  DoctorsScreen(this.selectedIndex);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +45,17 @@ class DoctorsScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        const MyTabBar(3, [
+                        MyTabBar(3, const [
                           'Doctors list',
                           'Add doctors',
                           'Manage your patients'
                         ], [
                           DoctorsList(),
-                          AddDoctor(),
+                          AddScreen([
+                            {'Name : ': nameController},
+                            {'Speciality : ': specialityController},
+                            {'Experience :': experienceController}
+                          ], 'Doctor SSN :', 'DC001'),
                           ManageYourPatients(),
                         ]),
                       ],

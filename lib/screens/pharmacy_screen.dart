@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '/screens/database_screens/add_pharmacy.dart';
+import '/screens/database_screens/add_screen.dart';
 import '/screens/database_screens/pharmacy_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
@@ -11,7 +11,10 @@ import '../widgets/my_tab_bar.dart';
 class PharmacyScreen extends StatelessWidget {
   static const routeName = '/pharmacy_screen';
   final int selectedIndex;
-  const PharmacyScreen(this.selectedIndex);
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final phnumberController = TextEditingController();
+  PharmacyScreen(this.selectedIndex);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +43,16 @@ class PharmacyScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        const MyTabBar(2, [
+                        MyTabBar(2, const [
                           'Pharmacies list',
                           'Add Pharmacy',
                         ], [
                           PharmacyList(),
-                          AddPharmacy(),
+                          AddScreen([
+                            {'Name : ': nameController},
+                            {'Address : ': addressController},
+                            {'Phone number :': phnumberController}
+                          ], 'Pharmacy ID :', 'PH001'),
                         ]),
                       ],
                     ),

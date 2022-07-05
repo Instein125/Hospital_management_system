@@ -86,7 +86,7 @@ class _SideMenuState extends State<SideMenu> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const DoctorsScreen(1),
+                      pageBuilder: (_, __, ___) => DoctorsScreen(1),
                       transitionDuration: const Duration(seconds: 0),
                     ),
                   );
@@ -110,7 +110,7 @@ class _SideMenuState extends State<SideMenu> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const PatientsScreen(2),
+                      pageBuilder: (_, __, ___) => PatientsScreen(2),
                       transitionDuration: const Duration(seconds: 0),
                     ),
                   );
@@ -124,7 +124,7 @@ class _SideMenuState extends State<SideMenu> {
                 () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const PharmacyScreen(3),
+                      pageBuilder: (_, __, ___) => PharmacyScreen(3),
                       transitionDuration: const Duration(seconds: 0),
                     ),
                   );
@@ -137,7 +137,7 @@ class _SideMenuState extends State<SideMenu> {
                 () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const CompaniesScreen(4),
+                      pageBuilder: (_, __, ___) => CompaniesScreen(4),
                       transitionDuration: const Duration(seconds: 1),
                     ),
                   );
@@ -160,7 +160,7 @@ class _SideMenuState extends State<SideMenu> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const DrugsScreen(5),
+                      pageBuilder: (_, __, ___) => DrugsScreen(5),
                       transitionDuration: const Duration(seconds: 0),
                     ),
                   );

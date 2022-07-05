@@ -57,7 +57,7 @@ class MainScreen extends StatelessWidget {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        const DoctorsScreen(1),
+                                        DoctorsScreen(1),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),
@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        const PatientsScreen(2),
+                                        PatientsScreen(2),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),
@@ -79,7 +79,7 @@ class MainScreen extends StatelessWidget {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        const PharmacyScreen(3),
+                                        PharmacyScreen(3),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),
@@ -90,7 +90,7 @@ class MainScreen extends StatelessWidget {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        const CompaniesScreen(4),
+                                        CompaniesScreen(4),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),
@@ -100,8 +100,7 @@ class MainScreen extends StatelessWidget {
                                   Icons.abc, 'assets/icons/medicine.png', () {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        const DrugsScreen(5),
+                                    pageBuilder: (_, __, ___) => DrugsScreen(5),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),

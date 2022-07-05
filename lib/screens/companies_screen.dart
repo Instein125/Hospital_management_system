@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '/screens/database_screens/add_company.dart';
+import '/screens/database_screens/add_screen.dart';
 import '/screens/database_screens/companies_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
@@ -11,7 +11,9 @@ import '../widgets/my_tab_bar.dart';
 class CompaniesScreen extends StatelessWidget {
   static const routeName = '/companies_screen';
   final int selectedIndex;
-  const CompaniesScreen(this.selectedIndex);
+  final nameController = TextEditingController();
+  final phnumberController = TextEditingController();
+  CompaniesScreen(this.selectedIndex);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +42,15 @@ class CompaniesScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        const MyTabBar(2, [
+                        MyTabBar(2, const [
                           'Companies list',
                           'Add Company',
                         ], [
                           CompaniesList(),
-                          AddCompany(),
+                          AddScreen([
+                            {'Company Name : ': nameController},
+                            {'Phone number : ': phnumberController},
+                          ], '', ''),
                         ]),
                       ],
                     ),

@@ -2,16 +2,19 @@
 
 import 'package:flutter/material.dart';
 
-import '/screens/database_screens/add_patient.dart';
 import '/screens/database_screens/patients_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
 import '/widgets/my_tab_bar.dart';
+import './database_screens/add_screen.dart';
 
 class PatientsScreen extends StatelessWidget {
   static const routeName = '/patients_screen';
   final int selectedIndex;
-  const PatientsScreen(this.selectedIndex);
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+  final ageController = TextEditingController();
+  PatientsScreen(this.selectedIndex);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +43,21 @@ class PatientsScreen extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        const MyTabBar(2, [
-                          'Patients list',
-                          'Add Patient',
-                        ], [
-                          PatientsList(),
-                          AddPatient(),
-                        ]),
+                        MyTabBar(
+                          2,
+                          const [
+                            'Patients list',
+                            'Add Patient',
+                          ],
+                          [
+                            PatientsList(),
+                            AddScreen([
+                              {'Name : ': nameController},
+                              {'Address : ': addressController},
+                              {'Age :': ageController}
+                            ], 'Patient SSN :', 'PT001'),
+                          ],
+                        ),
                       ],
                     ),
                   ),
