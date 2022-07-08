@@ -1,7 +1,13 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
+
+import '/models/primary_value_jsonfile.dart';
 import '/screens/database_screens/add_screen.dart';
 import '/screens/database_screens/doctors_list_screen.dart';
 import '/screens/database_screens/manage_your_patients.dart';
@@ -9,21 +15,127 @@ import '../widgets/my_tab_bar.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
 
-class DoctorsScreen extends StatelessWidget {
+class DoctorsScreen extends StatefulWidget {
   static const routeName = '/doctors_screen';
   final int selectedIndex;
-  final nameController = TextEditingController();
-  final specialityController = TextEditingController();
-  final experienceController = TextEditingController();
+  late String primaryValue = '';
+  late int primaryIndex = 0;
   DoctorsScreen(this.selectedIndex);
 
   @override
+  State<DoctorsScreen> createState() => _DoctorsScreenState();
+}
+
+class _DoctorsScreenState extends State<DoctorsScreen> {
+  late var nameController = TextEditingController();
+
+  late var specialityController = TextEditingController();
+
+  late var experienceController = TextEditingController();
+
+  final String primaryKey = 'Doctor SSN :';
+  static int count = 0;
+
+  Future<void> readJson() async {
+    final String response =
+        await rootBundle.loadString('jsonfile/primary_values.json');
+
+    final data = jsonDecode(response);
+
+    var values = PrimaryValueJson.fromJson(data);
+    setState(() {
+      if (primaryKey == 'Doctor SSN :') {
+        widget.primaryIndex = values.doc_ssn + count;
+        if (widget.primaryIndex < 10) {
+          widget.primaryValue = 'DC00${widget.primaryIndex}';
+        } else if (widget.primaryIndex > 9 && widget.primaryIndex < 100) {
+          widget.primaryValue = 'DC0${widget.primaryIndex}';
+        } else if (widget.primaryIndex > 99 && widget.primaryIndex < 1000) {
+          widget.primaryValue = 'DC${widget.primaryIndex}';
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readJson();
+  }
+
+  _writeJson(int count) async {
+    String response =
+        await rootBundle.loadString('jsonfile/primary_values.json');
+    File path = File('jsonfile/primary_values.json');
+
+    var data = jsonDecode(response);
+    var values = PrimaryValueJson.fromJson(data);
+    final PrimaryValueJson doctor = PrimaryValueJson(
+      doc_ssn: values.doc_ssn + count,
+      phar_id: values.phar_id,
+      ssn: values.ssn,
+    );
+    final update = doctor.toJson();
+    path.writeAsStringSync(json.encode(update));
+
+    nameController.text = '';
+    specialityController.text = '';
+    experienceController.text = '';
+    widget.primaryIndex = doctor.doc_ssn;
+    if (primaryKey == 'Doctor SSN :') {
+      widget.primaryIndex = values.doc_ssn + count;
+      if (widget.primaryIndex < 10) {
+        widget.primaryValue = 'DC00${widget.primaryIndex}';
+      } else if (widget.primaryIndex > 9 && widget.primaryIndex < 100) {
+        widget.primaryValue = 'DC0${widget.primaryIndex}';
+      } else if (widget.primaryIndex > 99 && widget.primaryIndex < 1000) {
+        widget.primaryValue = 'DC${widget.primaryIndex}';
+      }
+    }
+  }
+
+  Future<void> insertRecord(context) async {
+    count = count + 1;
+    print(nameController.text);
+    print(specialityController.text);
+    print(experienceController.text);
+    print(widget.primaryValue);
+    if (nameController.text == '' ||
+        specialityController.text == '' ||
+        experienceController.text == '') {
+      print("Please fill all fields");
+    } else {
+      try {
+        String uri = "http://localhost/hospital_MS_api/insert_doctor.php";
+
+        var res = await http.post(Uri.parse(uri), body: {
+          "Doc_SSN": widget.primaryValue,
+          "name": nameController.text,
+          "speciality": specialityController.text,
+          "experience": experienceController.text,
+        });
+        setState(() {
+          _writeJson(count);
+        });
+
+        var response = jsonDecode(res.body);
+        if (response["success"] == "true") {
+          print("Record Inserted");
+        } else {
+          print("Record not inserted");
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Row(
           children: [
-            SideMenu(selectedIndex),
+            SideMenu(widget.selectedIndex),
             Expanded(
               flex: 5,
               child: Column(
@@ -51,11 +163,16 @@ class DoctorsScreen extends StatelessWidget {
                           'Manage your patients'
                         ], [
                           DoctorsList(),
-                          AddScreen([
-                            {'Name : ': nameController},
-                            {'Speciality : ': specialityController},
-                            {'Experience :': experienceController}
-                          ], 'Doctor SSN :', 'DC001'),
+                          AddScreen(
+                            [
+                              {'Name : ': nameController},
+                              {'Speciality :': specialityController},
+                              {'Experience :': experienceController}
+                            ],
+                            primaryKey,
+                            widget.primaryValue,
+                            insertRecord,
+                          ),
                           ManageYourPatients(),
                         ]),
                       ],

@@ -1,15 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:hospital_system/widgets/add_table_row.dart';
+// ignore_for_file: deprecated_member_use
 
-class AddScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
+import '/widgets/add_table_row.dart';
+import '../../models/primary_value_jsonfile.dart';
+
+class AddScreen extends StatefulWidget {
   // const AddScreen({Key? key}) : super(key: key);
   List controllers;
   final String primaryKey;
-  final String primaryValue;
-  AddScreen(this.controllers, this.primaryKey, this.primaryValue);
+  String primaryValue;
+
+  Function insertRecord;
+
+  AddScreen(
+      this.controllers, this.primaryKey, this.primaryValue, this.insertRecord);
 
   @override
+  State<AddScreen> createState() => _AddScreenState();
+}
+
+class _AddScreenState extends State<AddScreen> {
+  late int primaryIndex;
+
   Widget build(BuildContext context) {
+    // readJson();
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -21,7 +39,12 @@ class AddScreen extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(20),
-        child: AddTableRow(controllers, primaryKey, primaryValue),
+        child: Column(
+          children: [
+            AddTableRow(widget.controllers, widget.primaryKey,
+                widget.primaryValue, widget.insertRecord),
+          ],
+        ),
       ),
     );
   }
