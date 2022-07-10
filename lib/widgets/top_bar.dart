@@ -1,11 +1,39 @@
 // ignore_for_file: use_key_in_widget_constructors
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class TopBar extends StatelessWidget {
+class TopBar extends StatefulWidget {
   final String title;
   const TopBar(this.title);
+
   @override
+  State<TopBar> createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBar> {
+  List doctorsList = [];
+
+  Future<void> getRecord() async {
+    String uri = "http://localhost/hospital_MS_api/view_doctor_list.php";
+    try {
+      var response = await http.get(Uri.parse(uri));
+      setState(() {
+        doctorsList = jsonDecode(response.body);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getRecord();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Container(
       height: 70,
@@ -17,7 +45,7 @@ class TopBar extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10),
             child: Text(
-              title,
+              widget.title,
               style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -30,15 +58,15 @@ class TopBar extends StatelessWidget {
             child: Row(
               children: [
                 Column(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Doctors',
                       style: TextStyle(
                         color: Colors.white,
                       ),
                     ),
                     Text(
-                      '15',
+                      "${doctorsList.length}",
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
