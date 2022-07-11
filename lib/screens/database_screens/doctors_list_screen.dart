@@ -12,6 +12,24 @@ class DoctorsList extends StatefulWidget {
 
 class _DoctorsListState extends State<DoctorsList> {
   List doctorsList = [];
+  int? sortColumnIndex;
+  bool isAscending = false;
+
+  Future<void> deleteRecord(String doc_ssn) async {
+    String uri = "http://localhost/hospital_MS_api/delete_doctor.php";
+    try {
+      var res = await http.post(Uri.parse(uri), body: {'id': doc_ssn});
+      var response = jsonDecode(res.body);
+      if (response['success'] == 'true') {
+        print("Record deleted");
+        getRecord();
+      } else {
+        print("Not deleted");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> getRecord() async {
     String uri = "http://localhost/hospital_MS_api/view_doctor_list.php";
@@ -39,53 +57,74 @@ class _DoctorsListState extends State<DoctorsList> {
         border: TableBorder(
             horizontalInside:
                 BorderSide(color: Theme.of(context).primaryColor)),
-        columns: const [
-          DataColumn(
+        sortColumnIndex: sortColumnIndex,
+        sortAscending: isAscending,
+        columns: [
+          const DataColumn(
+              onSort: null,
               label: Text(
-            "Doctor_SSN",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
-          )),
+                "Doctor_SSN",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              )),
           DataColumn(
+              onSort: onSort,
+              label: const Text(
+                "Name",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              )),
+          const DataColumn(
+              onSort: null,
               label: Text(
-            "Name",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
-          )),
-          DataColumn(
+                "Speciality",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              )),
+          const DataColumn(
+              onSort: null,
               label: Text(
-            "Speciality",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
-          )),
-          DataColumn(
+                "Experience(in years)",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              )),
+          const DataColumn(
+              onSort: null,
               label: Text(
-            "Experience(in years)",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
-          )),
-          DataColumn(
-              label: Text(
-            "Options",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
-          )),
+                "Options",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              )),
         ],
         rows: doctorsList.map((e) => CreateDataRow(e)).toList(),
       ),
     ]);
   }
+
+  void onSort(int columnIndex, bool ascending) {
+    if (columnIndex == 1) {
+      doctorsList.sort((user1, user2) =>
+          compareString(ascending, user1['Name'], user2['Name']));
+    }
+    setState(() {
+      this.sortColumnIndex = columnIndex;
+      this.isAscending = ascending;
+    });
+  }
+
+  int compareString(bool ascending, String value1, String value2) =>
+      ascending ? value1.compareTo(value2) : value2.compareTo(value1);
 
   DataRow CreateDataRow(doctor) {
     return DataRow(cells: [
@@ -100,11 +139,13 @@ class _DoctorsListState extends State<DoctorsList> {
                 onPressed: () {},
                 icon: const Icon(Icons.edit),
                 hoverColor: const Color.fromRGBO(97, 230, 103, 0.498)),
-            SizedBox(
+            const SizedBox(
               width: 40,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                deleteRecord(doctor["Doc_SSN"]);
+              },
               icon: const Icon(
                 Icons.delete,
                 color: Colors.red,
