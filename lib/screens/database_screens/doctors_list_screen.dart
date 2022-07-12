@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '/screens/database_screens/update_record.dart';
+
 class DoctorsList extends StatefulWidget {
   const DoctorsList({Key? key}) : super(key: key);
 
@@ -48,7 +50,6 @@ class _DoctorsListState extends State<DoctorsList> {
     // TODO: implement initState
     getRecord();
     super.initState();
-    print("I am doctor list");
   }
 
   Widget build(BuildContext context) {
@@ -60,9 +61,9 @@ class _DoctorsListState extends State<DoctorsList> {
         sortColumnIndex: sortColumnIndex,
         sortAscending: isAscending,
         columns: [
-          const DataColumn(
-              onSort: null,
-              label: Text(
+          DataColumn(
+              onSort: onSort,
+              label: const Text(
                 "Doctor_SSN",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -116,6 +117,9 @@ class _DoctorsListState extends State<DoctorsList> {
     if (columnIndex == 1) {
       doctorsList.sort((user1, user2) =>
           compareString(ascending, user1['Name'], user2['Name']));
+    } else if (columnIndex == 0) {
+      doctorsList.sort((user1, user2) =>
+          compareString(ascending, user1['Doc_SSN'], user2['Doc_SSN']));
     }
     setState(() {
       this.sortColumnIndex = columnIndex;
@@ -127,6 +131,9 @@ class _DoctorsListState extends State<DoctorsList> {
       ascending ? value1.compareTo(value2) : value2.compareTo(value1);
 
   DataRow CreateDataRow(doctor) {
+    var nameController = TextEditingController();
+    var specialityController = TextEditingController();
+    var experienceController = TextEditingController();
     return DataRow(cells: [
       DataCell(Text(doctor["Doc_SSN"])),
       DataCell(Text(doctor['Name'])),
@@ -136,7 +143,17 @@ class _DoctorsListState extends State<DoctorsList> {
         Row(
           children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  updateRecord(context, [
+                    {"Name :": nameController},
+                    {"Speciality :": specialityController},
+                    {"Experience :": experienceController},
+                  ], [
+                    doctor['Name'],
+                    doctor['Speciality'],
+                    doctor['Experience']
+                  ]);
+                },
                 icon: const Icon(Icons.edit),
                 hoverColor: const Color.fromRGBO(97, 230, 103, 0.498)),
             const SizedBox(
