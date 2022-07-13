@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '/screens/database_screens/update_record.dart';
+import 'update_record_dialog.dart';
+import '/screens/doctors_screen.dart';
 
 class DoctorsList extends StatefulWidget {
   const DoctorsList({Key? key}) : super(key: key);
@@ -43,6 +44,35 @@ class _DoctorsListState extends State<DoctorsList> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> updateRecord(String primaryKey, List<Map> controllers) async {
+    TextEditingController nameController = controllers[0]['Name :'];
+    TextEditingController specialityController = controllers[1]['Speciality :'];
+    TextEditingController experienceController = controllers[2]['Experience :'];
+    try {
+      String uri = "http://localhost/hospital_MS_api/update_doctor.php";
+      var res = await http.post(Uri.parse(uri), body: {
+        "Doc_SSN": primaryKey,
+        "name": nameController.text,
+        "speciality": specialityController.text,
+        "experience": experienceController.text,
+      });
+      var response = jsonDecode(res.body);
+      if (response["success"] == "true") {
+        print("Updated");
+      } else {
+        print("some issues");
+      }
+    } catch (e) {
+      print(e);
+    }
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => DoctorsScreen(1),
+        transitionDuration: const Duration(seconds: 0),
+      ),
+    );
   }
 
   @override
@@ -144,15 +174,18 @@ class _DoctorsListState extends State<DoctorsList> {
           children: [
             IconButton(
                 onPressed: () {
-                  updateRecord(context, [
-                    {"Name :": nameController},
-                    {"Speciality :": specialityController},
-                    {"Experience :": experienceController},
-                  ], [
-                    doctor['Name'],
-                    doctor['Speciality'],
-                    doctor['Experience']
-                  ]);
+                  nameController.text = doctor['Name'];
+                  specialityController.text = doctor['Speciality'];
+                  experienceController.text = doctor['Experience'];
+                  updateRecordDialog(
+                      context,
+                      [
+                        {"Name :": nameController},
+                        {"Speciality :": specialityController},
+                        {"Experience :": experienceController},
+                      ],
+                      doctor['Doc_SSN'],
+                      updateRecord);
                 },
                 icon: const Icon(Icons.edit),
                 hoverColor: const Color.fromRGBO(97, 230, 103, 0.498)),

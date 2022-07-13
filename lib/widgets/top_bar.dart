@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../screens/main_screen.dart';
+
 class TopBar extends StatefulWidget {
   final String title;
   const TopBar(this.title);
@@ -97,6 +99,21 @@ class _TopBarState extends State<TopBar> {
                     ),
                   ],
                 ),
+                const VerticalDivider(),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => const MainScreen(0),
+                          transitionDuration: const Duration(seconds: 0),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                      size: 30,
+                    ))
               ],
             ),
           )
