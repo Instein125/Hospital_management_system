@@ -13,7 +13,9 @@ import './doctors_screen.dart';
 
 class MainScreen extends StatelessWidget {
   final int selectedIndex;
-  const MainScreen(this.selectedIndex);
+  const MainScreen(
+    this.selectedIndex,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,38 +76,38 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 );
                               }, 'Patients'),
-                              DashboardItem(Icons.local_pharmacy_outlined,
-                                  'assets/icons/doctor.png', () {
-                                Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        PharmacyScreen(3),
-                                    transitionDuration:
-                                        const Duration(seconds: 0),
-                                  ),
-                                );
-                              }, 'Pharmacy'),
-                              DashboardItem(Icons.factory_outlined,
-                                  'assets/icons/doctor.png', () {
-                                Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        CompaniesScreen(4),
-                                    transitionDuration:
-                                        const Duration(seconds: 0),
-                                  ),
-                                );
-                              }, 'Companies'),
-                              DashboardItem(
-                                  Icons.abc, 'assets/icons/medicine.png', () {
-                                Navigator.of(context).pushReplacement(
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => DrugsScreen(5),
-                                    transitionDuration:
-                                        const Duration(seconds: 0),
-                                  ),
-                                );
-                              }, 'Drugs'),
+                              // DashboardItem(Icons.local_pharmacy_outlined,
+                              //     'assets/icons/doctor.png', () {
+                              //   Navigator.of(context).pushReplacement(
+                              //     PageRouteBuilder(
+                              //       pageBuilder: (_, __, ___) =>
+                              //           PharmacyScreen(3),
+                              //       transitionDuration:
+                              //           const Duration(seconds: 0),
+                              //     ),
+                              //   );
+                              // }, 'Pharmacy'),
+                              // DashboardItem(Icons.factory_outlined,
+                              //     'assets/icons/doctor.png', () {
+                              //   Navigator.of(context).pushReplacement(
+                              //     PageRouteBuilder(
+                              //       pageBuilder: (_, __, ___) =>
+                              //           CompaniesScreen(4),
+                              //       transitionDuration:
+                              //           const Duration(seconds: 0),
+                              //     ),
+                              //   );
+                              // }, 'Companies'),
+                              // DashboardItem(
+                              //     Icons.abc, 'assets/icons/medicine.png', () {
+                              //   Navigator.of(context).pushReplacement(
+                              //     PageRouteBuilder(
+                              //       pageBuilder: (_, __, ___) => DrugsScreen(5),
+                              //       transitionDuration:
+                              //           const Duration(seconds: 0),
+                              //     ),
+                              //   );
+                              // }, 'Drugs'),
                             ],
                           ),
                         ),

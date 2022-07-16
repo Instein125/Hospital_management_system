@@ -1,16 +1,57 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use
 
-import 'dart:ui';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class AddTableRow extends StatelessWidget {
+import '../screens/doctors_screen.dart';
+
+// ignore: must_be_immutable
+class AddTableRow extends StatefulWidget {
   List controllers;
   final String primaryKey;
   final String primaryValue;
+  Function insertRecord;
+
+  AddTableRow(
+      this.controllers, this.primaryKey, this.primaryValue, this.insertRecord);
+
+  @override
+  State<AddTableRow> createState() => _AddTableRowState();
+}
+
+class _AddTableRowState extends State<AddTableRow> {
+  late List SSN = [];
+  late List docName = [];
+  int index = 0;
+  String? value;
+
+  late String title;
+
+  Future<void> getSSN() async {
+    String uri = "http://localhost/hospital_MS_api/doc_ssn_list.php";
+    try {
+      var response = await http.get(Uri.parse(uri));
+      setState(() {
+        List doctorsSSN = jsonDecode(response.body);
+        for (int i = 0; i < doctorsSSN.length; i++) {
+          SSN.add(doctorsSSN[i]["Doc_SSN"]);
+          docName.add(doctorsSSN[i]["Name"]);
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getSSN();
+  }
 
   TableRow addTableRow(Map controller) {
-    late String title;
     for (String key in controller.keys) {
       title = key;
     }
@@ -29,33 +70,56 @@ class AddTableRow extends StatelessWidget {
           children: [
             SizedBox(
               width: 300,
-              child: TextField(
-                controller: controller[title] as TextEditingController,
-                decoration: const InputDecoration(isDense: true),
-                textAlign: TextAlign.center,
-              ),
-            )
+              child: title != 'Doctor_SSN : '
+                  ? TextField(
+                      controller: controller[title] as TextEditingController,
+                      decoration: const InputDecoration(isDense: true),
+                      textAlign: TextAlign.center,
+                    )
+                  : DropdownButton<dynamic>(
+                      focusColor: Colors.transparent,
+                      dropdownColor: Colors.green[300],
+                      isExpanded: true,
+                      value: value,
+                      items: SSN.map((e) {
+                        if (index >= docName.length) {
+                          index = 0;
+                        }
+                        return buildMenuItem(e, docName[index]);
+                      }).toList(),
+                      onChanged: (value) => setState(() {
+                            this.value = value;
+                            controller[title] = value;
+                          })),
+            ),
           ],
         ),
       ],
     );
   }
 
-  AddTableRow(this.controllers, this.primaryKey, this.primaryValue);
-
   @override
   Widget build(BuildContext context) {
-    List listWidgets = controllers.map((e) => addTableRow(e)).toList();
+    List listWidgets = widget.controllers.map((e) => addTableRow(e)).toList();
     listWidgets.insert(0, primaryKeyRow());
-    return Table(
-      columnWidths: const {
-        0: FlexColumnWidth(1),
-        1: FlexColumnWidth(4),
-      },
-      border: TableBorder.all(
-        color: Colors.transparent,
-      ),
-      children: listWidgets as List<TableRow>,
+
+    return Column(
+      children: [
+        Table(
+          columnWidths: const {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(4),
+          },
+          border: TableBorder.all(
+            color: Colors.transparent,
+          ),
+          children: listWidgets as List<TableRow>,
+        ),
+        const SizedBox(
+          height: 50,
+        ),
+        optionWidget(context),
+      ],
     );
   }
 
@@ -67,7 +131,7 @@ class AddTableRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                primaryKey,
+                widget.primaryKey,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -80,13 +144,71 @@ class AddTableRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                primaryValue,
+                widget.primaryValue,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  DropdownMenuItem buildMenuItem(String item, String name) {
+    index = index + 1;
+    return DropdownMenuItem(
+        value: item,
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.white54)),
+          ),
+          width: 300,
+          child: Text(
+            "$name  ($item)",
+            textAlign: TextAlign.center,
+          ),
+        ));
+  }
+
+  Row optionWidget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RaisedButton(
+          onPressed: (() => widget.insertRecord(context)),
+          color: Theme.of(context).accentColor,
+          hoverColor: Theme.of(context).primaryColor,
+          child: const Text(
+            'Insert',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        RaisedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) => DoctorsScreen(1),
+                transitionDuration: const Duration(seconds: 0),
+              ),
+            );
+          },
+          color: Theme.of(context).accentColor,
+          hoverColor: Theme.of(context).primaryColor,
+          child: const Text(
+            'Cancel',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );

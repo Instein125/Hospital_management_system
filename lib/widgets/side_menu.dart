@@ -118,56 +118,56 @@ class _SideMenuState extends State<SideMenu> {
                 selected: widget.selectedIndex == 2,
                 selectedTileColor: const Color.fromRGBO(45, 169, 92, 1),
               ),
-              BuildListTile(
-                Icons.local_pharmacy_outlined,
-                "Pharmacy",
-                () {
-                  Navigator.of(context).pushReplacement(
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => PharmacyScreen(3),
-                      transitionDuration: const Duration(seconds: 0),
-                    ),
-                  );
-                },
-                widget.selectedIndex == 3,
-              ),
-              BuildListTile(
-                Icons.factory_outlined,
-                "Comapanies",
-                () {
-                  Navigator.of(context).pushReplacement(
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => CompaniesScreen(4),
-                      transitionDuration: const Duration(seconds: 1),
-                    ),
-                  );
-                },
-                widget.selectedIndex == 4,
-              ),
-              ListTile(
-                leading: Image.asset(
-                  'assets/icons/medicine.png',
-                  color: Colors.white54,
-                  height: 27,
-                ),
-                title: const Text(
-                  'Drugs',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white54,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).pushReplacement(
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => DrugsScreen(5),
-                      transitionDuration: const Duration(seconds: 0),
-                    ),
-                  );
-                },
-                selected: widget.selectedIndex == 5,
-                selectedTileColor: const Color.fromRGBO(45, 169, 92, 1),
-              ),
+              // BuildListTile(
+              //   Icons.local_pharmacy_outlined,
+              //   "Pharmacy",
+              //   () {
+              //     Navigator.of(context).pushReplacement(
+              //       PageRouteBuilder(
+              //         pageBuilder: (_, __, ___) => PharmacyScreen(3),
+              //         transitionDuration: const Duration(seconds: 0),
+              //       ),
+              //     );
+              //   },
+              //   widget.selectedIndex == 3,
+              // ),
+              // BuildListTile(
+              //   Icons.factory_outlined,
+              //   "Comapanies",
+              //   () {
+              //     Navigator.of(context).pushReplacement(
+              //       PageRouteBuilder(
+              //         pageBuilder: (_, __, ___) => CompaniesScreen(4),
+              //         transitionDuration: const Duration(seconds: 1),
+              //       ),
+              //     );
+              //   },
+              //   widget.selectedIndex == 4,
+              // ),
+              // ListTile(
+              //   leading: Image.asset(
+              //     'assets/icons/medicine.png',
+              //     color: Colors.white54,
+              //     height: 27,
+              //   ),
+              //   title: const Text(
+              //     'Drugs',
+              //     style: TextStyle(
+              //       fontSize: 20,
+              //       color: Colors.white54,
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     Navigator.of(context).pushReplacement(
+              //       PageRouteBuilder(
+              //         pageBuilder: (_, __, ___) => DrugsScreen(5),
+              //         transitionDuration: const Duration(seconds: 0),
+              //       ),
+              //     );
+              //   },
+              //   selected: widget.selectedIndex == 5,
+              //   selectedTileColor: const Color.fromRGBO(45, 169, 92, 1),
+              // ),
             ],
           ),
         ),
