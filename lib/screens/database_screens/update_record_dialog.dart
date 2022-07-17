@@ -7,8 +7,7 @@ void updateRecordDialog(BuildContext context, List<Map> controllers,
   List listWidgets = controllers.map((e) {
     return buildDialogContent(e);
   }).toList();
-  listWidgets.insert(
-      3, buttonWidget(context, primaryKey, updateRecord, controllers));
+  listWidgets.add(buttonWidget(context, primaryKey, updateRecord, controllers));
 
   showDialog(
       context: context,

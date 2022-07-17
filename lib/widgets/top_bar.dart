@@ -15,14 +15,44 @@ class TopBar extends StatefulWidget {
 }
 
 class _TopBarState extends State<TopBar> {
-  List doctorsList = [];
+  int doctorCount = 0;
+  int patientCount = 0;
+  int pharmacyCount = 0;
 
-  Future<void> getRecord() async {
-    String uri = "http://localhost/hospital_MS_api/view_doctor_list.php";
+  Future<void> getDoctorCount() async {
+    String uri = "http://localhost/hospital_MS_api/count_doctors.php";
     try {
       var response = await http.get(Uri.parse(uri));
       setState(() {
-        doctorsList = jsonDecode(response.body);
+        List doctorsList = jsonDecode(response.body);
+
+        doctorCount = int.parse(doctorsList[0]["0"]);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> getPatientCount() async {
+    String uri = "http://localhost/hospital_MS_api/count_patients.php";
+    try {
+      var response = await http.get(Uri.parse(uri));
+      setState(() {
+        List patientsList = jsonDecode(response.body);
+        patientCount = int.parse(patientsList[0]["0"]);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> getPharmacyCount() async {
+    String uri = "http://localhost/hospital_MS_api/count_pharmacys.php";
+    try {
+      var response = await http.get(Uri.parse(uri));
+      setState(() {
+        List pharmacyList = jsonDecode(response.body);
+        pharmacyCount = int.parse(pharmacyList[0]["0"]);
       });
     } catch (e) {
       print(e);
@@ -32,7 +62,9 @@ class _TopBarState extends State<TopBar> {
   @override
   void initState() {
     // TODO: implement initState
-    getRecord();
+    getDoctorCount();
+    getPatientCount();
+    getPharmacyCount();
     super.initState();
   }
 
@@ -68,34 +100,34 @@ class _TopBarState extends State<TopBar> {
                       ),
                     ),
                     Text(
-                      "${doctorsList.length}",
+                      "$doctorCount",
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
                 const VerticalDivider(),
                 Column(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Patients',
                       style: TextStyle(color: Colors.white),
                     ),
                     Text(
-                      '15',
-                      style: TextStyle(color: Colors.white),
+                      "$patientCount",
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
                 const VerticalDivider(),
                 Column(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Pharmacy',
                       style: TextStyle(color: Colors.white),
                     ),
                     Text(
-                      '15',
-                      style: TextStyle(color: Colors.white),
+                      "$pharmacyCount",
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),

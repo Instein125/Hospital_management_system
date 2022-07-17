@@ -118,32 +118,32 @@ class _SideMenuState extends State<SideMenu> {
                 selected: widget.selectedIndex == 2,
                 selectedTileColor: const Color.fromRGBO(45, 169, 92, 1),
               ),
-              // BuildListTile(
-              //   Icons.local_pharmacy_outlined,
-              //   "Pharmacy",
-              //   () {
-              //     Navigator.of(context).pushReplacement(
-              //       PageRouteBuilder(
-              //         pageBuilder: (_, __, ___) => PharmacyScreen(3),
-              //         transitionDuration: const Duration(seconds: 0),
-              //       ),
-              //     );
-              //   },
-              //   widget.selectedIndex == 3,
-              // ),
-              // BuildListTile(
-              //   Icons.factory_outlined,
-              //   "Comapanies",
-              //   () {
-              //     Navigator.of(context).pushReplacement(
-              //       PageRouteBuilder(
-              //         pageBuilder: (_, __, ___) => CompaniesScreen(4),
-              //         transitionDuration: const Duration(seconds: 1),
-              //       ),
-              //     );
-              //   },
-              //   widget.selectedIndex == 4,
-              // ),
+              BuildListTile(
+                Icons.local_pharmacy_outlined,
+                "Pharmacy",
+                () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => PharmacyScreen(3),
+                      transitionDuration: const Duration(seconds: 0),
+                    ),
+                  );
+                },
+                widget.selectedIndex == 3,
+              ),
+              BuildListTile(
+                Icons.factory_outlined,
+                "Comapanies",
+                () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => CompaniesScreen(4),
+                      transitionDuration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+                widget.selectedIndex == 4,
+              ),
               // ListTile(
               //   leading: Image.asset(
               //     'assets/icons/medicine.png',

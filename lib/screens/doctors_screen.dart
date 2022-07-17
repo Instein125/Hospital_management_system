@@ -95,7 +95,6 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
   }
 
   Future<void> insertRecord(context) async {
-    count = count + 1;
     print(nameController.text);
     print(specialityController.text);
     print(experienceController.text);
@@ -105,6 +104,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
         experienceController.text == '') {
       print("Please fill all fields");
     } else {
+      count = count + 1;
       try {
         String uri = "http://localhost/hospital_MS_api/insert_doctor.php";
 

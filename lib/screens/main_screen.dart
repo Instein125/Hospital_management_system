@@ -76,28 +76,28 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 );
                               }, 'Patients'),
-                              // DashboardItem(Icons.local_pharmacy_outlined,
-                              //     'assets/icons/doctor.png', () {
-                              //   Navigator.of(context).pushReplacement(
-                              //     PageRouteBuilder(
-                              //       pageBuilder: (_, __, ___) =>
-                              //           PharmacyScreen(3),
-                              //       transitionDuration:
-                              //           const Duration(seconds: 0),
-                              //     ),
-                              //   );
-                              // }, 'Pharmacy'),
-                              // DashboardItem(Icons.factory_outlined,
-                              //     'assets/icons/doctor.png', () {
-                              //   Navigator.of(context).pushReplacement(
-                              //     PageRouteBuilder(
-                              //       pageBuilder: (_, __, ___) =>
-                              //           CompaniesScreen(4),
-                              //       transitionDuration:
-                              //           const Duration(seconds: 0),
-                              //     ),
-                              //   );
-                              // }, 'Companies'),
+                              DashboardItem(Icons.local_pharmacy_outlined,
+                                  'assets/icons/doctor.png', () {
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        PharmacyScreen(3),
+                                    transitionDuration:
+                                        const Duration(seconds: 0),
+                                  ),
+                                );
+                              }, 'Pharmacy'),
+                              DashboardItem(Icons.factory_outlined,
+                                  'assets/icons/doctor.png', () {
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        CompaniesScreen(4),
+                                    transitionDuration:
+                                        const Duration(seconds: 0),
+                                  ),
+                                );
+                              }, 'Companies'),
                               // DashboardItem(
                               //     Icons.abc, 'assets/icons/medicine.png', () {
                               //   Navigator.of(context).pushReplacement(
