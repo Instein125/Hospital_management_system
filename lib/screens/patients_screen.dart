@@ -33,7 +33,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
 
   late var ageController = TextEditingController();
 
-  late String docController = '';
+  late var docController = TextEditingController();
   final String primaryKey = 'Patient SSN :';
   static int count = 0;
 
@@ -44,6 +44,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
     final data = jsonDecode(response);
 
     var values = PrimaryValueJson.fromJson(data);
+
     setState(() {
       if (primaryKey == 'Patient SSN :') {
         widget.primaryIndex = values.ssn + count;
@@ -82,9 +83,10 @@ class _PatientsScreenState extends State<PatientsScreen> {
     nameController.text = '';
     addressController.text = '';
     ageController.text = '';
-    widget.primaryIndex = patient.doc_ssn;
+    docController.text = '';
+    widget.primaryIndex = patient.ssn;
     if (primaryKey == 'Patient SSN :') {
-      widget.primaryIndex = values.doc_ssn + count;
+      widget.primaryIndex = values.ssn + count;
       if (widget.primaryIndex < 10) {
         widget.primaryValue = 'PT00${widget.primaryIndex}';
       } else if (widget.primaryIndex > 9 && widget.primaryIndex < 100) {
@@ -96,22 +98,26 @@ class _PatientsScreenState extends State<PatientsScreen> {
   }
 
   Future<void> insertRecord(context) async {
-    count = count + 1;
+    print(nameController.text);
+    print(addressController.text);
+    print(ageController.text);
+    print(docController.text);
     if (nameController.text == '' ||
         addressController.text == '' ||
         ageController.text == '' ||
-        docController == '') {
+        docController.text == '') {
       print("Please fill all fields");
     } else {
+      count = count + 1;
       try {
         String uri = "http://localhost/hospital_MS_api/insert_patient.php";
 
         var res = await http.post(Uri.parse(uri), body: {
           "SSN": widget.primaryValue,
-          "Doc_SSN": docController,
+          "Doc_SSN": docController.text,
           "name": nameController.text,
-          "speciality": addressController.text,
-          "experience": ageController.text,
+          "address": addressController.text,
+          "age": ageController.text,
         });
         setState(() {
           _writeJson(count);
@@ -128,6 +134,13 @@ class _PatientsScreenState extends State<PatientsScreen> {
       }
     }
   }
+
+  dynamic cancelButton() => Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (_, __, ___) => PatientsScreen(2),
+          transitionDuration: const Duration(seconds: 0),
+        ),
+      );
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,7 +182,8 @@ class _PatientsScreenState extends State<PatientsScreen> {
                               {'Address : ': addressController},
                               {'Age : ': ageController},
                               {'Doctor_SSN : ': docController},
-                            ], 'Patient SSN :', 'PT001', insertRecord),
+                            ], primaryKey, widget.primaryValue, insertRecord,
+                                cancelButton),
                           ],
                         ),
                       ],

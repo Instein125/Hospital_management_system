@@ -130,6 +130,13 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     }
   }
 
+  dynamic cancelButton() => Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (_, __, ___) => DoctorsScreen(1),
+          transitionDuration: const Duration(seconds: 0),
+        ),
+      );
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -172,6 +179,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                             primaryKey,
                             widget.primaryValue,
                             insertRecord,
+                            cancelButton,
                           ),
                           ManageYourPatients(),
                         ]),

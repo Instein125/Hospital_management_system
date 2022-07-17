@@ -13,9 +13,10 @@ class AddTableRow extends StatefulWidget {
   final String primaryKey;
   final String primaryValue;
   Function insertRecord;
+  Function cancelButton;
 
-  AddTableRow(
-      this.controllers, this.primaryKey, this.primaryValue, this.insertRecord);
+  AddTableRow(this.controllers, this.primaryKey, this.primaryValue,
+      this.insertRecord, this.cancelButton);
 
   @override
   State<AddTableRow> createState() => _AddTableRowState();
@@ -88,8 +89,11 @@ class _AddTableRowState extends State<AddTableRow> {
                         return buildMenuItem(e, docName[index]);
                       }).toList(),
                       onChanged: (value) => setState(() {
+                            TextEditingController temp =
+                                controller[title] as TextEditingController;
                             this.value = value;
-                            controller[title] = value;
+
+                            temp.text = value;
                           })),
             ),
           ],
@@ -192,14 +196,7 @@ class _AddTableRowState extends State<AddTableRow> {
           width: 20,
         ),
         RaisedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-              PageRouteBuilder(
-                pageBuilder: (_, __, ___) => DoctorsScreen(1),
-                transitionDuration: const Duration(seconds: 0),
-              ),
-            );
-          },
+          onPressed: () => widget.cancelButton(),
           color: Theme.of(context).accentColor,
           hoverColor: Theme.of(context).primaryColor,
           child: const Text(

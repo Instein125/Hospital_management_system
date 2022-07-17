@@ -15,9 +15,10 @@ class AddScreen extends StatefulWidget {
   String primaryValue;
 
   Function insertRecord;
+  Function cancelButton;
 
-  AddScreen(
-      this.controllers, this.primaryKey, this.primaryValue, this.insertRecord);
+  AddScreen(this.controllers, this.primaryKey, this.primaryValue,
+      this.insertRecord, this.cancelButton);
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -42,7 +43,7 @@ class _AddScreenState extends State<AddScreen> {
         child: Column(
           children: [
             AddTableRow(widget.controllers, widget.primaryKey,
-                widget.primaryValue, widget.insertRecord),
+                widget.primaryValue, widget.insertRecord, widget.cancelButton),
           ],
         ),
       ),
