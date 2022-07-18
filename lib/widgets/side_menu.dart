@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '/screens/supervisors_screen.dart';
 import '/screens/companies_screen.dart';
 import '/screens/doctors_screen.dart';
 import '/screens/drugs_screen.dart';
@@ -144,30 +145,43 @@ class _SideMenuState extends State<SideMenu> {
                 },
                 widget.selectedIndex == 4,
               ),
-              // ListTile(
-              //   leading: Image.asset(
-              //     'assets/icons/medicine.png',
-              //     color: Colors.white54,
-              //     height: 27,
-              //   ),
-              //   title: const Text(
-              //     'Drugs',
-              //     style: TextStyle(
-              //       fontSize: 20,
-              //       color: Colors.white54,
-              //     ),
-              //   ),
-              //   onTap: () {
-              //     Navigator.of(context).pushReplacement(
-              //       PageRouteBuilder(
-              //         pageBuilder: (_, __, ___) => DrugsScreen(5),
-              //         transitionDuration: const Duration(seconds: 0),
-              //       ),
-              //     );
-              //   },
-              //   selected: widget.selectedIndex == 5,
-              //   selectedTileColor: const Color.fromRGBO(45, 169, 92, 1),
-              // ),
+              ListTile(
+                leading: Image.asset(
+                  'assets/icons/medicine.png',
+                  color: Colors.white54,
+                  height: 27,
+                ),
+                title: const Text(
+                  'Drugs',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white54,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => DrugsScreen(5),
+                      transitionDuration: const Duration(seconds: 0),
+                    ),
+                  );
+                },
+                selected: widget.selectedIndex == 5,
+                selectedTileColor: const Color.fromRGBO(45, 169, 92, 1),
+              ),
+              BuildListTile(
+                Icons.supervisor_account_outlined,
+                "Supervisor",
+                () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => SupervisorScreen(6),
+                      transitionDuration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+                widget.selectedIndex == 6,
+              ),
             ],
           ),
         ),

@@ -13,6 +13,7 @@ import '/screens/database_screens/pharmacy_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
 import '../widgets/my_tab_bar.dart';
+import '/screens/database_screens/contract_screen.dart';
 
 class PharmacyScreen extends StatefulWidget {
   static const routeName = '/pharmacy_screen';
@@ -74,6 +75,7 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
       doc_ssn: values.doc_ssn,
       phar_id: values.phar_id + count,
       ssn: values.ssn,
+      super_id: values.super_id,
     );
     final update = pharmacy.toJson();
     path.writeAsStringSync(json.encode(update));
@@ -164,9 +166,10 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        MyTabBar(2, const [
+                        MyTabBar(3, const [
                           'Pharmacies list',
                           'Add Pharmacy',
+                          'Manage your contract'
                         ], [
                           PharmacyList(),
                           AddScreen(
@@ -180,6 +183,7 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
                             insertRecord,
                             cancelButton,
                           ),
+                          ContractScreen(),
                         ]),
                       ],
                     ),

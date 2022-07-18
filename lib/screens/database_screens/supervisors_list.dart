@@ -1,25 +1,25 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:hospital_system/screens/drugs_screen.dart';
 import 'package:http/http.dart' as http;
 
-import 'update_record_dialog.dart';
+import '/screens/database_screens/update_record_dialog.dart';
+import '/screens/supervisors_screen.dart';
 
-class DrugsList extends StatefulWidget {
-  const DrugsList({Key? key}) : super(key: key);
+class SupervisorsList extends StatefulWidget {
+  const SupervisorsList({Key? key}) : super(key: key);
 
   @override
-  State<DrugsList> createState() => _DrugsListState();
+  State<SupervisorsList> createState() => _SupervisorsListState();
 }
 
-class _DrugsListState extends State<DrugsList> {
-  List drugsList = [];
+class _SupervisorsListState extends State<SupervisorsList> {
+  List supervisorsList = [];
   int? sortColumnIndex;
   bool isAscending = false;
 
   Future<void> deleteRecord(String id) async {
-    String uri = "http://localhost/hospital_MS_api/delete_drug.php";
+    String uri = "http://localhost/hospital_MS_api/delete_supervisor.php";
     try {
       var res = await http.post(Uri.parse(uri), body: {'id': id});
       var response = jsonDecode(res.body);
@@ -35,11 +35,11 @@ class _DrugsListState extends State<DrugsList> {
   }
 
   Future<void> getRecord() async {
-    String uri = "http://localhost/hospital_MS_api/view_drug_list.php";
+    String uri = "http://localhost/hospital_MS_api/view_supervisor_list.php";
     try {
       var response = await http.get(Uri.parse(uri));
       setState(() {
-        drugsList = jsonDecode(response.body);
+        supervisorsList = jsonDecode(response.body);
       });
     } catch (e) {
       print(e);
@@ -47,15 +47,14 @@ class _DrugsListState extends State<DrugsList> {
   }
 
   Future<void> updateRecord(String primaryKey, List<Map> controllers) async {
-    TextEditingController tradenameController = controllers[0]['Trade name :'];
-    TextEditingController formulaController = controllers[1]['Formula :'];
-
+    TextEditingController nameController = controllers[0]['Name :'];
+    TextEditingController addressController = controllers[1]['Address :'];
     try {
-      String uri = "http://localhost/hospital_MS_api/update_drug.php";
+      String uri = "http://localhost/hospital_MS_api/update_supervisor.php";
       var res = await http.post(Uri.parse(uri), body: {
-        "Trade_name": tradenameController.text,
-        "Formula": formulaController.text,
-        "oldName": primaryKey,
+        "Supervisor_ID": primaryKey,
+        "name": nameController.text,
+        "address": addressController.text,
       });
       var response = jsonDecode(res.body);
       if (response["success"] == "true") {
@@ -68,7 +67,7 @@ class _DrugsListState extends State<DrugsList> {
     }
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => DrugsScreen(5),
+        pageBuilder: (_, __, ___) => SupervisorScreen(6),
         transitionDuration: const Duration(seconds: 0),
       ),
     );
@@ -93,7 +92,16 @@ class _DrugsListState extends State<DrugsList> {
           DataColumn(
               onSort: onSort,
               label: const Text(
-                "Trade name",
+                "Supervisor ID",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              )),
+          DataColumn(
+              onSort: onSort,
+              label: const Text(
+                "Name",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
@@ -102,7 +110,7 @@ class _DrugsListState extends State<DrugsList> {
           const DataColumn(
               onSort: null,
               label: Text(
-                "Formula",
+                "Address",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
@@ -119,15 +127,18 @@ class _DrugsListState extends State<DrugsList> {
                 ),
               )),
         ],
-        rows: drugsList.map((e) => CreateDataRow(e)).toList(),
+        rows: supervisorsList.map((e) => CreateDataRow(e)).toList(),
       ),
     ]);
   }
 
   void onSort(int columnIndex, bool ascending) {
     if (columnIndex == 1) {
-      drugsList.sort((user1, user2) =>
-          compareString(ascending, user1['Trade_name'], user2['Trade_name']));
+      supervisorsList.sort((user1, user2) =>
+          compareString(ascending, user1['Name'], user2['Name']));
+    } else if (columnIndex == 0) {
+      supervisorsList.sort((user1, user2) => compareString(
+          ascending, user1['supervisor_ID'], user2['supervisor_ID']));
     }
     setState(() {
       this.sortColumnIndex = columnIndex;
@@ -138,28 +149,27 @@ class _DrugsListState extends State<DrugsList> {
   int compareString(bool ascending, String value1, String value2) =>
       ascending ? value1.compareTo(value2) : value2.compareTo(value1);
 
-  DataRow CreateDataRow(drug) {
-    var tradenameController = TextEditingController();
-    var formulaController = TextEditingController();
-
+  DataRow CreateDataRow(supervisor) {
+    var nameController = TextEditingController();
+    var addressController = TextEditingController();
     return DataRow(cells: [
-      DataCell(Text(drug['Trade_name'])),
-      DataCell(Text(drug['Formula'])),
+      DataCell(Text(supervisor["supervisor_ID"])),
+      DataCell(Text(supervisor['Name'])),
+      DataCell(Text(supervisor['Address'])),
       DataCell(
         Row(
           children: [
             IconButton(
                 onPressed: () {
-                  tradenameController.text = drug['Trade_name'];
-                  formulaController.text = drug['Formula'];
-
+                  nameController.text = supervisor['Name'];
+                  addressController.text = supervisor['Address'];
                   updateRecordDialog(
                       context,
                       [
-                        {"Trade name :": tradenameController},
-                        {"Formula :": formulaController},
+                        {"Name :": nameController},
+                        {"Address :": addressController},
                       ],
-                      drug['Trade_name'],
+                      supervisor['supervisor_ID'],
                       updateRecord);
                 },
                 icon: const Icon(Icons.edit),
@@ -169,7 +179,7 @@ class _DrugsListState extends State<DrugsList> {
             ),
             IconButton(
               onPressed: () {
-                deleteRecord(drug["Trade_name"]);
+                deleteRecord(supervisor["supervisor_ID"]);
               },
               icon: const Icon(
                 Icons.delete,

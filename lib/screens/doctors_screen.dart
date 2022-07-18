@@ -74,6 +74,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
       doc_ssn: values.doc_ssn + count,
       phar_id: values.phar_id,
       ssn: values.ssn,
+      super_id: values.super_id,
     );
     final update = doctor.toJson();
     path.writeAsStringSync(json.encode(update));
@@ -166,7 +167,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                         ),
                         MyTabBar(3, const [
                           'Doctors list',
-                          'Add doctors',
+                          'Add doctor',
                           'Manage your patients'
                         ], [
                           DoctorsList(),

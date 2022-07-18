@@ -1,40 +1,36 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
-import '../models/primary_value_jsonfile.dart';
-import '/screens/database_screens/patients_list.dart';
+import '/models/primary_value_jsonfile.dart';
+import '/screens/database_screens/add_screen.dart';
+import '/screens/database_screens/supervisors_list.dart';
+import '../widgets/my_tab_bar.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
-import '/widgets/my_tab_bar.dart';
-import './database_screens/add_screen.dart';
 
-class PatientsScreen extends StatefulWidget {
-  static const routeName = '/patients_screen';
+class SupervisorScreen extends StatefulWidget {
+  static const routeName = '/supervisors_screen';
   final int selectedIndex;
   late String primaryValue = '';
   late int primaryIndex = 0;
-
-  PatientsScreen(this.selectedIndex);
+  SupervisorScreen(this.selectedIndex);
 
   @override
-  State<PatientsScreen> createState() => _PatientsScreenState();
+  State<SupervisorScreen> createState() => _SupervisorScreenState();
 }
 
-class _PatientsScreenState extends State<PatientsScreen> {
+class _SupervisorScreenState extends State<SupervisorScreen> {
   late var nameController = TextEditingController();
 
   late var addressController = TextEditingController();
 
-  late var ageController = TextEditingController();
-
-  late var docController = TextEditingController();
-  final String primaryKey = 'Patient SSN :';
+  final String primaryKey = 'Supervisor ID :';
   static int count = 0;
 
   Future<void> readJson() async {
@@ -44,16 +40,15 @@ class _PatientsScreenState extends State<PatientsScreen> {
     final data = jsonDecode(response);
 
     var values = PrimaryValueJson.fromJson(data);
-
     setState(() {
-      if (primaryKey == 'Patient SSN :') {
-        widget.primaryIndex = values.ssn + count;
+      if (primaryKey == 'Supervisor ID :') {
+        widget.primaryIndex = values.super_id + count;
         if (widget.primaryIndex < 10) {
-          widget.primaryValue = 'PT00${widget.primaryIndex}';
+          widget.primaryValue = 'SP00${widget.primaryIndex}';
         } else if (widget.primaryIndex > 9 && widget.primaryIndex < 100) {
-          widget.primaryValue = 'PT0${widget.primaryIndex}';
+          widget.primaryValue = 'SP0${widget.primaryIndex}';
         } else if (widget.primaryIndex > 99 && widget.primaryIndex < 1000) {
-          widget.primaryValue = 'PT${widget.primaryIndex}';
+          widget.primaryValue = 'SP${widget.primaryIndex}';
         }
       }
     });
@@ -72,53 +67,42 @@ class _PatientsScreenState extends State<PatientsScreen> {
 
     var data = jsonDecode(response);
     var values = PrimaryValueJson.fromJson(data);
-    final PrimaryValueJson patient = PrimaryValueJson(
+    final PrimaryValueJson supervisor = PrimaryValueJson(
       doc_ssn: values.doc_ssn,
       phar_id: values.phar_id,
-      ssn: values.ssn + count,
-      super_id: values.super_id,
+      ssn: values.ssn,
+      super_id: values.super_id + count,
     );
-    final update = patient.toJson();
+    final update = supervisor.toJson();
     path.writeAsStringSync(json.encode(update));
 
     nameController.text = '';
     addressController.text = '';
-    ageController.text = '';
-    docController.text = '';
-    widget.primaryIndex = patient.ssn;
-    if (primaryKey == 'Patient SSN :') {
-      widget.primaryIndex = values.ssn + count;
+    widget.primaryIndex = supervisor.doc_ssn;
+    if (primaryKey == 'Supervisor ID :') {
+      widget.primaryIndex = values.super_id + count;
       if (widget.primaryIndex < 10) {
-        widget.primaryValue = 'PT00${widget.primaryIndex}';
+        widget.primaryValue = 'SP00${widget.primaryIndex}';
       } else if (widget.primaryIndex > 9 && widget.primaryIndex < 100) {
-        widget.primaryValue = 'PT0${widget.primaryIndex}';
+        widget.primaryValue = 'SP0${widget.primaryIndex}';
       } else if (widget.primaryIndex > 99 && widget.primaryIndex < 1000) {
-        widget.primaryValue = 'PT${widget.primaryIndex}';
+        widget.primaryValue = 'SP${widget.primaryIndex}';
       }
     }
   }
 
   Future<void> insertRecord(context) async {
-    print(nameController.text);
-    print(addressController.text);
-    print(ageController.text);
-    print(docController.text);
-    if (nameController.text == '' ||
-        addressController.text == '' ||
-        ageController.text == '' ||
-        docController.text == '') {
+    if (nameController.text == '' || addressController.text == '') {
       print("Please fill all fields");
     } else {
       count = count + 1;
       try {
-        String uri = "http://localhost/hospital_MS_api/insert_patient.php";
+        String uri = "http://localhost/hospital_MS_api/insert_supervisor.php";
 
         var res = await http.post(Uri.parse(uri), body: {
-          "SSN": widget.primaryValue,
-          "Doc_SSN": docController.text,
+          "supervisor_ID": widget.primaryValue,
           "name": nameController.text,
-          "address": addressController.text,
-          "age": ageController.text,
+          "Address": addressController.text,
         });
         setState(() {
           _writeJson(count);
@@ -138,7 +122,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
 
   dynamic cancelButton() => Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => PatientsScreen(2),
+          pageBuilder: (_, __, ___) => SupervisorScreen(6),
           transitionDuration: const Duration(seconds: 0),
         ),
       );
@@ -153,7 +137,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
               flex: 5,
               child: Column(
                 children: [
-                  const TopBar('Patients'),
+                  const TopBar('Supervisors'),
                   Container(
                     decoration: const BoxDecoration(color: Color(0xff9DABAF)),
                     width: double.infinity,
@@ -170,23 +154,22 @@ class _PatientsScreenState extends State<PatientsScreen> {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        MyTabBar(
-                          2,
-                          const [
-                            'Patients list',
-                            'Add Patient',
-                          ],
-                          [
-                            PatientsList(),
-                            AddScreen([
+                        MyTabBar(2, const [
+                          'Supervisors list',
+                          'Add supervisor',
+                        ], [
+                          SupervisorsList(),
+                          AddScreen(
+                            [
                               {'Name : ': nameController},
-                              {'Address : ': addressController},
-                              {'Age : ': ageController},
-                              {'Doctor_SSN : ': docController},
-                            ], primaryKey, widget.primaryValue, insertRecord,
-                                cancelButton),
-                          ],
-                        ),
+                              {'Address :': addressController}
+                            ],
+                            primaryKey,
+                            widget.primaryValue,
+                            insertRecord,
+                            cancelButton,
+                          ),
+                        ]),
                       ],
                     ),
                   ),

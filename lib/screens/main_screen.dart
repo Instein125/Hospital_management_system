@@ -1,11 +1,12 @@
 // ignore_for_file: use_key_in_widget_constructors, deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:hospital_system/screens/companies_screen.dart';
-import 'package:hospital_system/screens/drugs_screen.dart';
-import 'package:hospital_system/screens/patients_screen.dart';
-import 'package:hospital_system/screens/pharmacy_screen.dart';
 
+import '/screens/companies_screen.dart';
+import '/screens/drugs_screen.dart';
+import '/screens/patients_screen.dart';
+import '/screens/pharmacy_screen.dart';
+import '/screens/supervisors_screen.dart';
 import '/widgets/dashboaed_item.dart';
 import '/widgets/top_bar.dart';
 import '/widgets/side_menu.dart';
@@ -98,16 +99,27 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 );
                               }, 'Companies'),
-                              // DashboardItem(
-                              //     Icons.abc, 'assets/icons/medicine.png', () {
-                              //   Navigator.of(context).pushReplacement(
-                              //     PageRouteBuilder(
-                              //       pageBuilder: (_, __, ___) => DrugsScreen(5),
-                              //       transitionDuration:
-                              //           const Duration(seconds: 0),
-                              //     ),
-                              //   );
-                              // }, 'Drugs'),
+                              DashboardItem(
+                                  Icons.abc, 'assets/icons/medicine.png', () {
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) => DrugsScreen(5),
+                                    transitionDuration:
+                                        const Duration(seconds: 0),
+                                  ),
+                                );
+                              }, 'Drugs'),
+                              DashboardItem(Icons.supervisor_account_outlined,
+                                  'assets/icons/doctor.png', () {
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) =>
+                                        SupervisorScreen(6),
+                                    transitionDuration:
+                                        const Duration(seconds: 0),
+                                  ),
+                                );
+                              }, 'Supervisor'),
                             ],
                           ),
                         ),
