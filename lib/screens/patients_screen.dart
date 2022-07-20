@@ -111,9 +111,9 @@ class _PatientsScreenState extends State<PatientsScreen> {
     } else {
       count = count + 1;
       try {
-        String uri = "http://localhost/hospital_MS_api/insert_patient.php";
+        String uri1 = "http://localhost/hospital_MS_api/insert_patient.php";
 
-        var res = await http.post(Uri.parse(uri), body: {
+        var res = await http.post(Uri.parse(uri1), body: {
           "SSN": widget.primaryValue,
           "Doc_SSN": docController.text,
           "name": nameController.text,
@@ -124,6 +124,18 @@ class _PatientsScreenState extends State<PatientsScreen> {
           _writeJson(count);
         });
 
+        String uri2 =
+            "http://localhost/hospital_MS_api/insert_prescribe_data.php";
+        var res1 = await http.post(Uri.parse(uri2), body: {
+          "SSN": widget.primaryValue,
+          "Doc_SSN": docController.text,
+        });
+        var response1 = jsonDecode(res1.body);
+        if (response1["success"] == "true") {
+          print("Record Inserted into prescribe");
+        } else {
+          print("Record not inserted into prescribe");
+        }
         var response = jsonDecode(res.body);
         if (response["success"] == "true") {
           print("Record Inserted");
