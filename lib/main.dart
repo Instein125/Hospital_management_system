@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 
 import '/screens/companies_screen.dart';
@@ -10,6 +11,8 @@ import '/screens/pharmacy_screen.dart';
 import '/screens/main_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  DesktopWindow.setMinWindowSize(const Size(1600, 900));
   runApp(const MyApp());
 }
 
