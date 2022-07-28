@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '/screens/database_screens/sell_drug_dialog.dart';
 import '/screens/pharmacy_screen.dart';
 import '/screens/database_screens/update_record_dialog.dart';
 
@@ -74,6 +75,67 @@ class _PharmacyListState extends State<PharmacyList> {
         pageBuilder: (_, __, ___) => PharmacyScreen(3),
         transitionDuration: const Duration(seconds: 0),
       ),
+    );
+  }
+
+  Future<void> sellDrug(String primaryKey, List<Map> controllers) async {
+    TextEditingController drugController = controllers[0]['Drug name :'];
+    TextEditingController priceController = controllers[1]['Price(in NRs) :'];
+    TextEditingController quantityController = controllers[2]['Quantity :'];
+    if (drugController.text == '' ||
+        priceController.text == '' ||
+        priceController.text == '0' ||
+        quantityController.text == '' ||
+        quantityController.text == '0') {
+      ScaffoldMessenger.of(context).showSnackBar(errorMessage(
+          "Please fill up all fields. (Quantity and price can't be zero)!!"));
+    } else {
+      try {
+        String uri = "http://localhost/hospital_MS_api/insert_sell.php";
+        var res = await http.post(Uri.parse(uri), body: {
+          "Phar_ID": primaryKey,
+          "Trade_name": drugController.text,
+          "Price": priceController.text,
+          "Quantity": quantityController.text,
+        });
+        var response = jsonDecode(res.body);
+        if (response["success"] == "true") {
+          print("Updated");
+        } else {
+          print("some issues");
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(errorMessage("Drug is not available!!"));
+      }
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (_, __, ___) => PharmacyScreen(3),
+          transitionDuration: const Duration(seconds: 0),
+        ),
+      );
+    }
+  }
+
+  SnackBar errorMessage(String msg) {
+    return SnackBar(
+      content: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: const Color.fromARGB(126, 175, 79, 76)),
+        child: Text(
+          msg,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 15,
+          ),
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      duration: const Duration(milliseconds: 1500),
     );
   }
 
@@ -176,9 +238,6 @@ class _PharmacyListState extends State<PharmacyList> {
           children: [
             IconButton(
                 onPressed: () {
-                  nameController.text = pharmacy['Name'];
-                  addressController.text = pharmacy['Address'];
-                  phnumberController.text = pharmacy['Ph_number'];
                   updateRecordDialog(
                       context,
                       [
@@ -195,7 +254,12 @@ class _PharmacyListState extends State<PharmacyList> {
               width: 20,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                nameController.text = pharmacy['Name'];
+                addressController.text = pharmacy['Address'];
+                phnumberController.text = pharmacy['Ph_number'];
+                sellDrugDialog(context, pharmacy['Phar_ID'], sellDrug);
+              },
               icon: const Icon(
                 Icons.sell,
                 color: Colors.green,

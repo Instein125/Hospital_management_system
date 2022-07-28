@@ -15,8 +15,9 @@ import '/widgets/my_tab_bar.dart';
 class PrescribeScreen extends StatefulWidget {
   static const routeName = '/prescribe_screen';
   final int selectedIndex;
+  final String docSSN;
 
-  PrescribeScreen(this.selectedIndex);
+  PrescribeScreen(this.selectedIndex, this.docSSN);
 
   @override
   State<PrescribeScreen> createState() => _PrescribeScreenState();
@@ -53,7 +54,7 @@ class _PrescribeScreenState extends State<PrescribeScreen> {
                         MyTabBar(1, const [
                           'Your Patients'
                         ], [
-                          PrescribeList(),
+                          PrescribeList(widget.docSSN),
                         ]),
                       ],
                     ),

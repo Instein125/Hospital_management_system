@@ -127,7 +127,7 @@ class _CompaniesListState extends State<CompaniesList> {
   }
 
   void onSort(int columnIndex, bool ascending) {
-    if (columnIndex == 1) {
+    if (columnIndex == 0) {
       companiesList.sort((user1, user2) => compareString(
           ascending, user1['Company_name'], user2['Company_name']));
     }

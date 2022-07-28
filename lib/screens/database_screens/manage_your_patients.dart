@@ -47,7 +47,7 @@ class ManageYourPatients extends StatelessWidget {
         if (response == "success") {
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
-              pageBuilder: (_, __, ___) => PrescribeScreen(1),
+              pageBuilder: (_, __, ___) => PrescribeScreen(1, _primaryKey.text),
               transitionDuration: const Duration(seconds: 1),
             ),
           );
@@ -56,9 +56,8 @@ class ManageYourPatients extends StatelessWidget {
             content: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: const Color.fromRGBO(76, 175, 80, 0.5),
-              ),
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(126, 175, 79, 76)),
               child: const Text(
                 "Doctor SSN and Name combination doesn't exixt!",
                 textAlign: TextAlign.center,
@@ -70,7 +69,7 @@ class ManageYourPatients extends StatelessWidget {
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.transparent,
             elevation: 0,
-            duration: const Duration(milliseconds: 1000),
+            duration: const Duration(milliseconds: 1500),
           ));
         }
       } catch (e) {

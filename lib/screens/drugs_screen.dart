@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '/screens/database_screens/drugs_store.dart';
 import '/screens/database_screens/add_screen.dart';
 import '/screens/database_screens/drugs_list.dart';
 import '/widgets/side_menu.dart';
@@ -29,7 +30,25 @@ class _DrugsScreenState extends State<DrugsScreen> {
 
   Future<void> insertRecord(context) async {
     if (tradenameController.text == '' || formulaController.text == '') {
-      print("Please fill all fields");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromARGB(126, 175, 79, 76)),
+          child: const Text(
+            "Please fill all the fileds!!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        duration: const Duration(milliseconds: 1500),
+      ));
     } else {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_drug.php";
@@ -89,9 +108,10 @@ class _DrugsScreenState extends State<DrugsScreen> {
                           ),
                           margin: const EdgeInsets.all(20),
                         ),
-                        MyTabBar(2, const [
+                        MyTabBar(3, const [
                           'Drugs list',
                           'Add drug',
+                          'Store'
                         ], [
                           DrugsList(),
                           AddScreen(
@@ -104,6 +124,7 @@ class _DrugsScreenState extends State<DrugsScreen> {
                             insertRecord,
                             cancelButton,
                           ),
+                          DrugsStore(),
                         ]),
                       ],
                     ),

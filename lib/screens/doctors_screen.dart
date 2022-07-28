@@ -103,7 +103,25 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     if (nameController.text == '' ||
         specialityController.text == '' ||
         experienceController.text == '') {
-      print("Please fill all fields");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromARGB(126, 175, 79, 76)),
+          child: const Text(
+            "Please fill all the fileds!!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        duration: const Duration(milliseconds: 1500),
+      ));
     } else {
       count = count + 1;
       try {

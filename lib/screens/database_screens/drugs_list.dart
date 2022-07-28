@@ -125,7 +125,7 @@ class _DrugsListState extends State<DrugsList> {
   }
 
   void onSort(int columnIndex, bool ascending) {
-    if (columnIndex == 1) {
+    if (columnIndex == 0) {
       drugsList.sort((user1, user2) =>
           compareString(ascending, user1['Trade_name'], user2['Trade_name']));
     }
