@@ -1,11 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 import '/screens/database_screens/prescribe_list_screen.dart';
 import '/widgets/side_menu.dart';
@@ -17,7 +12,7 @@ class PrescribeScreen extends StatefulWidget {
   final int selectedIndex;
   final String docSSN;
 
-  PrescribeScreen(this.selectedIndex, this.docSSN);
+  const PrescribeScreen(this.selectedIndex, this.docSSN);
 
   @override
   State<PrescribeScreen> createState() => _PrescribeScreenState();

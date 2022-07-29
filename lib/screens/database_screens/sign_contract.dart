@@ -2,25 +2,25 @@
 
 import 'package:flutter/material.dart';
 
-import '/widgets/add_table_row.dart';
+import '/widgets/add_contract_row.dart';
 
-class AddScreen extends StatefulWidget {
-  // const AddScreen({Key? key}) : super(key: key);
+class SignContract extends StatefulWidget {
+  // const SignContract({Key? key}) : super(key: key);
   List controllers;
   final String primaryKey;
   String primaryValue;
 
-  Function insertRecord;
+  Function signContract;
   Function cancelButton;
 
-  AddScreen(this.controllers, this.primaryKey, this.primaryValue,
-      this.insertRecord, this.cancelButton);
+  SignContract(this.controllers, this.primaryKey, this.primaryValue,
+      this.signContract, this.cancelButton);
 
   @override
-  State<AddScreen> createState() => _AddScreenState();
+  State<SignContract> createState() => _SignContractState();
 }
 
-class _AddScreenState extends State<AddScreen> {
+class _SignContractState extends State<SignContract> {
   late int primaryIndex;
 
   Widget build(BuildContext context) {
@@ -38,8 +38,8 @@ class _AddScreenState extends State<AddScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            AddTableRow(widget.controllers, widget.primaryKey,
-                widget.primaryValue, widget.insertRecord, widget.cancelButton),
+            AddContractRow(widget.controllers, widget.primaryKey,
+                widget.primaryValue, widget.signContract, widget.cancelButton),
           ],
         ),
       ),

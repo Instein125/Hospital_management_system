@@ -13,7 +13,7 @@ import '/screens/database_screens/pharmacy_list.dart';
 import '/widgets/side_menu.dart';
 import '/widgets/top_bar.dart';
 import '../widgets/my_tab_bar.dart';
-import '/screens/database_screens/contract_screen.dart';
+import 'database_screens/manage_your_contract.dart';
 
 class PharmacyScreen extends StatefulWidget {
   static const routeName = '/pharmacy_screen';
@@ -201,7 +201,7 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
                             insertRecord,
                             cancelButton,
                           ),
-                          ContractScreen(),
+                          ManageYourContracts(),
                         ]),
                       ],
                     ),

@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../screens/doctors_screen.dart';
-
 // ignore: must_be_immutable
 class AddTableRow extends StatefulWidget {
   List controllers;
@@ -50,6 +48,7 @@ class _AddTableRowState extends State<AddTableRow> {
   void initState() {
     // TODO: implement initState
     getSSN();
+    super.initState();
   }
 
   TableRow addTableRow(Map controller) {

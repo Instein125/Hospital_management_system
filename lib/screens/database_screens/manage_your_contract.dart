@@ -5,10 +5,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '/screens/prescribe_screen.dart';
+import '/screens/contract_sceen.dart';
 import '/screens/login_screen.dart';
 
-class ManageYourPatients extends StatelessWidget {
+class ManageYourContracts extends StatelessWidget {
   final TextEditingController _primaryKey = TextEditingController();
   final TextEditingController _name = TextEditingController();
 
@@ -18,23 +18,23 @@ class ManageYourPatients extends StatelessWidget {
           .showSnackBar(errorMessage("Please fill all the fields!!"));
     } else {
       try {
-        String uri = "http://localhost/hospital_MS_api/login_doctor.php";
+        String uri = "http://localhost/hospital_MS_api/login_pharmacy.php";
 
         var res = await http.post(Uri.parse(uri), body: {
-          "doc_ssn": _primaryKey.text,
+          "Phar_ID": _primaryKey.text,
           "name": _name.text,
         });
         var response = json.decode(res.body);
         if (response == "success") {
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
-              pageBuilder: (_, __, ___) => PrescribeScreen(1, _primaryKey.text),
+              pageBuilder: (_, __, ___) => ContractScreen(3, _primaryKey.text),
               transitionDuration: const Duration(seconds: 1),
             ),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-              errorMessage("Doctor SSN and Name combination doesn't exixt!"));
+              errorMessage("Pharmacy ID and name combination doesn't exist!!"));
         }
       } catch (e) {
         print(e);
@@ -68,7 +68,7 @@ class ManageYourPatients extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: LoginScreen(
-      id: 'Doctor SSN',
+      id: 'Pharmacy ID',
       idname: "Name",
       primaryKey: _primaryKey,
       name: _name,
