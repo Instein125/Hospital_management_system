@@ -81,7 +81,12 @@ class _ContractScreenState extends State<ContractScreen> {
           "end_date": endDateController.text,
         });
         setState(() {
-          durationController.text = "";
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => ContractScreen(3, widget.pharId),
+              transitionDuration: const Duration(seconds: 1),
+            ),
+          );
         });
         var response = jsonDecode(res.body);
         if (response["success"] == "true") {
@@ -97,8 +102,8 @@ class _ContractScreenState extends State<ContractScreen> {
 
   dynamic cancelButton() => Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => PharmacyScreen(3),
-          transitionDuration: const Duration(seconds: 0),
+          pageBuilder: (_, __, ___) => ContractScreen(3, widget.pharId),
+          transitionDuration: const Duration(seconds: 1),
         ),
       );
 
