@@ -15,4 +15,4 @@ Steps to be followed:
 2. Open xampp and start apache and mySQL server.
 3. Create a database named Hospital.
 4. Import hospital.sql from database folder from here.
-5. Run main.dart and it should start.
+5. Run main.dart and it should start OR we could goto \hospital_management_system\build\windows\runner\Release and run hospital_system.exe
