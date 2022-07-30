@@ -63,7 +63,6 @@ class _ContractScreenState extends State<ContractScreen> {
       try {
         DateTime tempDate =
             DateFormat("yyyy-MM-dd").parse(startDateController.text);
-        print(tempDate);
         var endDate = DateTime(
             tempDate.year + int.parse(durationController.text),
             tempDate.month,
@@ -142,7 +141,7 @@ class _ContractScreenState extends State<ContractScreen> {
                           'Your Contracts',
                           'Sign Contract'
                         ], [
-                          ContractsList(),
+                          ContractsList(widget.pharId),
                           SignContract([
                             {'Company Name : ': companyController},
                             {'Supervisor : ': supervisorController},
