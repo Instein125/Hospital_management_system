@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2022 at 08:48 PM
+-- Generation Time: Jul 30, 2022 at 09:41 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -35,14 +35,6 @@ CREATE TABLE `contract` (
   `end_date` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `contract`
---
-
-INSERT INTO `contract` (`Company_name`, `Phar_ID`, `supervisor_ID`, `start_date`, `end_date`) VALUES
-('sagarmatha', 'ph004', 'SP005', '2022-07-29', '2024-06-30'),
-('sagarmatha', 'ph019', 'SP006', '2022-07-29', '2023-06-30');
-
 -- --------------------------------------------------------
 
 --
@@ -56,16 +48,6 @@ CREATE TABLE `doctor` (
   `Experience` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `doctor`
---
-
-INSERT INTO `doctor` (`Doc_SSN`, `Name`, `Speciality`, `Experience`) VALUES
-('DC001', 'new1', 'new1', 12),
-('DC003', 'new3', 'new3', 17),
-('DC004', 'new4', 'new4', 12),
-('DC005', 'new4', 'new4', 5);
-
 -- --------------------------------------------------------
 
 --
@@ -76,17 +58,6 @@ CREATE TABLE `drug` (
   `Trade_name` varchar(20) NOT NULL,
   `Formula` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `drug`
---
-
-INSERT INTO `drug` (`Trade_name`, `Formula`) VALUES
-('new1', 'new1'),
-('new2', 'new2'),
-('new3', 'new3'),
-('new4', 'new4'),
-('new5', 'new5');
 
 -- --------------------------------------------------------
 
@@ -102,18 +73,6 @@ CREATE TABLE `patient` (
   `Doc_SSN` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `patient`
---
-
-INSERT INTO `patient` (`SSN`, `Name`, `Address`, `Age`, `Doc_SSN`) VALUES
-('PT003', 'new3', 'new3', 56, 'DC004'),
-('PT004', 'new4', 'new4', 20, 'DC003'),
-('PT007', 'new7', 'new7', 7, 'DC001'),
-('PT008', 'new8', 'new8', 17, 'DC001'),
-('PT009', 'new9', 'new9', 12, 'DC001'),
-('PT010', 'new10', 'new10', 10, 'DC001');
-
 -- --------------------------------------------------------
 
 --
@@ -124,15 +83,6 @@ CREATE TABLE `pharmaceutical_company` (
   `Company_name` varchar(50) NOT NULL,
   `Ph_number` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `pharmaceutical_company`
---
-
-INSERT INTO `pharmaceutical_company` (`Company_name`, `Ph_number`) VALUES
-('recent', 123),
-('sagarmatha', 123),
-('test2', 855);
 
 -- --------------------------------------------------------
 
@@ -146,17 +96,6 @@ CREATE TABLE `pharmacy` (
   `Address` varchar(30) NOT NULL,
   `Ph_number` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `pharmacy`
---
-
-INSERT INTO `pharmacy` (`Phar_ID`, `Name`, `Address`, `Ph_number`) VALUES
-('PH004', 'test23', 'test23', 123564),
-('PH009', 'updated', 'updated', 12345),
-('PH015', 'updated2', 'updated2', 546),
-('PH018', 'test2', 'test2', 123),
-('PH019', 'new19', 'new19', 19);
 
 -- --------------------------------------------------------
 
@@ -172,18 +111,6 @@ CREATE TABLE `prescribe` (
   `Quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `prescribe`
---
-
-INSERT INTO `prescribe` (`SSN`, `Doc_SSN`, `Trade_name`, `Prescribe_date`, `Quantity`) VALUES
-('PT003', 'DC004', 'new5', '2022-07-28', 10),
-('PT004', 'DC003', NULL, NULL, 0),
-('PT007', 'DC001', 'new5', '2022-07-28', 10),
-('PT008', 'DC001', 'new2', '2022-07-28', 50),
-('PT009', 'DC001', 'new4', '2022-07-28', 12),
-('PT010', 'DC001', 'new1', '2022-07-28', 50);
-
 -- --------------------------------------------------------
 
 --
@@ -197,21 +124,6 @@ CREATE TABLE `sell` (
   `Quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `sell`
---
-
-INSERT INTO `sell` (`Trade_name`, `Phar_ID`, `Price`, `Quantity`) VALUES
-('new1', 'PH004', 100, 10),
-('new1', 'PH004', 100, 10),
-('new1', 'PH004', 800, 10),
-('new5', 'PH018', 500, 450),
-('new3', 'PH009', 500, 50),
-('new3', 'PH009', 500, 10),
-('new3', 'PH004', 100, 10),
-('new1', 'PH004', 100, 100),
-('new4', 'PH004', 600, 15);
-
 -- --------------------------------------------------------
 
 --
@@ -223,15 +135,6 @@ CREATE TABLE `supervisor` (
   `Name` varchar(20) NOT NULL,
   `Address` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `supervisor`
---
-
-INSERT INTO `supervisor` (`supervisor_ID`, `Name`, `Address`) VALUES
-('SP004', 'new', 'new'),
-('SP005', 'new4', 'new4'),
-('SP006', 'newdata', 'newdata');
 
 --
 -- Indexes for dumped tables
