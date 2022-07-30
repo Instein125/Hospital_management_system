@@ -36,7 +36,7 @@ else return;
 $query="INSERT INTO `patient`(`SSN`, `Name`, `Address`, `Age`, `Doc_SSN`) 
 VALUES ('$SSN','$name','$address','$age','$Doc_SSN')";
  $exe=mysqli_query($con,$query);
-
+ 
  $arr=[];
  if($exe){
    $arr["success"] =="true";

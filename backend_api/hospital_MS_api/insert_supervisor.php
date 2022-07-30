@@ -28,7 +28,7 @@ $query="INSERT INTO `supervisor`(`supervisor_ID`, `Name`, `Address`)
 
  $arr=[];
  if($exe){
-   $arr["success"] =="true";
+   $arr["success"] ="true";
  }
  else{
     $arr["success"]="false";
