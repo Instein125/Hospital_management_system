@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'dart:convert';
 import 'dart:io';
@@ -96,10 +96,6 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
   }
 
   Future<void> insertRecord(context) async {
-    print(nameController.text);
-    print(specialityController.text);
-    print(experienceController.text);
-    print(widget.primaryValue);
     if (nameController.text == '' ||
         specialityController.text == '' ||
         experienceController.text == '') {
@@ -127,7 +123,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_doctor.php";
 
-        var res = await http.post(Uri.parse(uri), body: {
+        await http.post(Uri.parse(uri), body: {
           "Doc_SSN": widget.primaryValue,
           "name": nameController.text,
           "speciality": specialityController.text,
@@ -136,13 +132,6 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
         setState(() {
           _writeJson(count);
         });
-
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Record Inserted");
-        } else {
-          print("Record not inserted");
-        }
       } catch (e) {
         print(e);
       }
@@ -156,6 +145,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
         ),
       );
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -188,7 +178,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                           'Add doctor',
                           'Manage your patients'
                         ], [
-                          DoctorsList(),
+                          const DoctorsList(),
                           AddScreen(
                             [
                               {'Name : ': nameController},

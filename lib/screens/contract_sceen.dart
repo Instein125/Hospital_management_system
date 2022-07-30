@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-import '/screens/pharmacy_screen.dart';
 import '/screens/database_screens/contracts_list.dart';
 import '/screens/database_screens/sign_contract.dart';
 import '/widgets/side_menu.dart';
@@ -72,7 +71,7 @@ class _ContractScreenState extends State<ContractScreen> {
 
         String uri = "http://localhost/hospital_MS_api/insert_contract.php";
 
-        var res = await http.post(Uri.parse(uri), body: {
+        await http.post(Uri.parse(uri), body: {
           "Phar_ID": widget.pharId,
           "Company_name": companyController.text,
           "supervisor_ID": supervisorController.text,
@@ -87,12 +86,6 @@ class _ContractScreenState extends State<ContractScreen> {
             ),
           );
         });
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Record Inserted");
-        } else {
-          print("Record not inserted");
-        }
       } catch (e) {
         print(e);
       }
@@ -106,6 +99,7 @@ class _ContractScreenState extends State<ContractScreen> {
         ),
       );
 
+  @override
   Widget build(BuildContext context) {
     var now = DateTime.now();
     var formatter = DateFormat('yyyy-MM-dd');

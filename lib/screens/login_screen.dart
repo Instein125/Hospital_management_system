@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:hospital_system/screens/prescribe_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   String id;
@@ -18,7 +17,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 200, left: 400, right: 400),
+      padding: const EdgeInsets.only(top: 200, left: 400, right: 400),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

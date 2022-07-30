@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this
+// ignore_for_file: unnecessary_this, use_build_context_synchronously, non_constant_identifier_names
 
 import 'dart:convert';
 
@@ -26,11 +26,8 @@ class _DoctorsListState extends State<DoctorsList> {
       var res = await http.post(Uri.parse(uri), body: {'id': doc_ssn});
       var response = jsonDecode(res.body);
       if (response['success'] == 'true') {
-        print("Record deleted");
         getRecord();
-      } else {
-        print("Not deleted");
-      }
+      } else {}
     } catch (e) {
       print(e);
     }
@@ -54,18 +51,12 @@ class _DoctorsListState extends State<DoctorsList> {
     TextEditingController experienceController = controllers[2]['Experience :'];
     try {
       String uri = "http://localhost/hospital_MS_api/update_doctor.php";
-      var res = await http.post(Uri.parse(uri), body: {
+      await http.post(Uri.parse(uri), body: {
         "Doc_SSN": primaryKey,
         "name": nameController.text,
         "speciality": specialityController.text,
         "experience": experienceController.text,
       });
-      var response = jsonDecode(res.body);
-      if (response["success"] == "true") {
-        print("Updated");
-      } else {
-        print("some issues");
-      }
     } catch (e) {
       print(e);
     }
@@ -79,11 +70,11 @@ class _DoctorsListState extends State<DoctorsList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListView(controller: ScrollController(), children: [
       DataTable(

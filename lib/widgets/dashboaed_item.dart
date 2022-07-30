@@ -14,7 +14,7 @@ class DashboardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 20,
-      shadowColor: Color.fromARGB(175, 0, 55, 57),
+      shadowColor: const Color.fromARGB(175, 0, 55, 57),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

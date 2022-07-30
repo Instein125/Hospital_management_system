@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, unnecessary_this, non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -24,11 +26,8 @@ class _DrugsListState extends State<DrugsList> {
       var res = await http.post(Uri.parse(uri), body: {'id': id});
       var response = jsonDecode(res.body);
       if (response['success'] == 'true') {
-        print("Record deleted");
         getRecord();
-      } else {
-        print("Not deleted");
-      }
+      } else {}
     } catch (e) {
       print(e);
     }
@@ -52,17 +51,11 @@ class _DrugsListState extends State<DrugsList> {
 
     try {
       String uri = "http://localhost/hospital_MS_api/update_drug.php";
-      var res = await http.post(Uri.parse(uri), body: {
+      await http.post(Uri.parse(uri), body: {
         "Trade_name": tradenameController.text,
         "Formula": formulaController.text,
         "oldName": primaryKey,
       });
-      var response = jsonDecode(res.body);
-      if (response["success"] == "true") {
-        print("Updated");
-      } else {
-        print("some issues");
-      }
     } catch (e) {
       print(e);
     }
@@ -76,11 +69,11 @@ class _DrugsListState extends State<DrugsList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListView(controller: ScrollController(), children: [
       DataTable(

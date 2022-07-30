@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, unnecessary_this, non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -24,11 +26,8 @@ class _SupervisorsListState extends State<SupervisorsList> {
       var res = await http.post(Uri.parse(uri), body: {'id': id});
       var response = jsonDecode(res.body);
       if (response['success'] == 'true') {
-        print("Record deleted");
         getRecord();
-      } else {
-        print("Not deleted");
-      }
+      } else {}
     } catch (e) {
       print(e);
     }
@@ -51,17 +50,11 @@ class _SupervisorsListState extends State<SupervisorsList> {
     TextEditingController addressController = controllers[1]['Address :'];
     try {
       String uri = "http://localhost/hospital_MS_api/update_supervisor.php";
-      var res = await http.post(Uri.parse(uri), body: {
+      await http.post(Uri.parse(uri), body: {
         "Supervisor_ID": primaryKey,
         "name": nameController.text,
         "address": addressController.text,
       });
-      var response = jsonDecode(res.body);
-      if (response["success"] == "true") {
-        print("Updated");
-      } else {
-        print("some issues");
-      }
     } catch (e) {
       print(e);
     }
@@ -75,11 +68,11 @@ class _SupervisorsListState extends State<SupervisorsList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListView(controller: ScrollController(), children: [
       DataTable(

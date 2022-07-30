@@ -33,7 +33,7 @@ class MyTabBar extends StatelessWidget {
                     .map((e) => Tab(
                           child: Text(
                             e,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'dart:convert';
 import 'dart:io';
@@ -99,10 +99,6 @@ class _PatientsScreenState extends State<PatientsScreen> {
   }
 
   Future<void> insertRecord(context) async {
-    print(nameController.text);
-    print(addressController.text);
-    print(ageController.text);
-    print(docController.text);
     if (nameController.text == '' ||
         addressController.text == '' ||
         ageController.text == '' ||
@@ -131,7 +127,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
       try {
         String uri1 = "http://localhost/hospital_MS_api/insert_patient.php";
 
-        var res = await http.post(Uri.parse(uri1), body: {
+        await http.post(Uri.parse(uri1), body: {
           "SSN": widget.primaryValue,
           "Doc_SSN": docController.text,
           "name": nameController.text,
@@ -144,22 +140,10 @@ class _PatientsScreenState extends State<PatientsScreen> {
 
         String uri2 =
             "http://localhost/hospital_MS_api/insert_prescribe_data.php";
-        var res1 = await http.post(Uri.parse(uri2), body: {
+        await http.post(Uri.parse(uri2), body: {
           "SSN": widget.primaryValue,
           "Doc_SSN": docController.text,
         });
-        var response1 = jsonDecode(res1.body);
-        if (response1["success"] == "true") {
-          print("Record Inserted into prescribe");
-        } else {
-          print("Record not inserted into prescribe");
-        }
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Record Inserted");
-        } else {
-          print("Record not inserted");
-        }
       } catch (e) {
         print(e);
       }
@@ -173,6 +157,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
         ),
       );
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -207,7 +192,7 @@ class _PatientsScreenState extends State<PatientsScreen> {
                             'Add Patient',
                           ],
                           [
-                            PatientsList(),
+                            const PatientsList(),
                             AddScreen([
                               {'Name : ': nameController},
                               {'Address : ': addressController},

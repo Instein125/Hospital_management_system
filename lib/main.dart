@@ -3,11 +3,6 @@
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 
-import '/screens/companies_screen.dart';
-import '/screens/doctors_screen.dart';
-import '/screens/drugs_screen.dart';
-import '/screens/patients_screen.dart';
-import '/screens/pharmacy_screen.dart';
 import '/screens/main_screen.dart';
 
 void main() {
@@ -31,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: const Color(0xff2DA95C),
         accentColor: const Color(0xff033B4A),
-        disabledColor: Color.fromARGB(255, 99, 123, 130),
+        disabledColor: const Color.fromARGB(255, 99, 123, 130),
         //canvasColor: const Color(0xff9DABAF),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xff2DA95C),
@@ -40,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => MainScreen(0),
+        '/': (context) => const MainScreen(0),
         // DoctorsScreen.routeName: (context) => DoctorsScreen(1),
         // PatientsScreen.routeName: (context) => PatientsScreen(2),
         // PharmacyScreen.routeName: (context) => PharmacyScreen(3),

@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use, non_constant_identifier_names
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use, non_constant_identifier_names, unnecessary_this
 
 import 'dart:convert';
 
@@ -112,35 +112,26 @@ class _AddContractRowState extends State<AddContractRow> {
 
                                   temp.text = valueC;
                                 }))
-                        : supervisorsID.length != 0
-                            ? DropdownButton<dynamic>(
-                                focusColor: Colors.transparent,
-                                dropdownColor: Colors.green[300],
-                                isExpanded: true,
-                                value: valueS,
-                                items: supervisorsID.map((e) {
-                                  if (index >= supervisorsName.length) {
-                                    index = 0;
-                                  }
-                                  return buildSupervisorMenuItem(
-                                      e, supervisorsName[index]);
-                                }).toList(),
-                                onChanged: (value) => setState(() {
-                                      TextEditingController temp =
-                                          controller["Supervisor : "]
-                                              as TextEditingController;
-                                      this.valueS = value;
+                        : DropdownButton<dynamic>(
+                            focusColor: Colors.transparent,
+                            dropdownColor: Colors.green[300],
+                            isExpanded: true,
+                            value: valueS,
+                            items: supervisorsID.map((e) {
+                              if (index >= supervisorsName.length) {
+                                index = 0;
+                              }
+                              return buildSupervisorMenuItem(
+                                  e, supervisorsName[index]);
+                            }).toList(),
+                            onChanged: (value) => setState(() {
+                                  TextEditingController temp =
+                                      controller["Supervisor : "]
+                                          as TextEditingController;
+                                  this.valueS = value;
 
-                                      temp.text = value;
-                                    }))
-                            : Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.red),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: const Text(
-                                    "Hire new supervisor for further processing!!"),
-                              )),
+                                  temp.text = value;
+                                }))),
           ],
         ),
       ],

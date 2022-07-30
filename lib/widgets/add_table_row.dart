@@ -46,7 +46,6 @@ class _AddTableRowState extends State<AddTableRow> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getSSN();
     super.initState();
   }

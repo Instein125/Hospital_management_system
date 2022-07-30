@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, override_on_non_overriding_member, non_constant_identifier_names
+// ignore_for_file: use_key_in_widget_constructors, override_on_non_overriding_member, non_constant_identifier_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
 
@@ -138,7 +138,7 @@ class _SideMenuState extends State<SideMenu> {
                 () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => CompaniesScreen(4),
+                      pageBuilder: (_, __, ___) => const CompaniesScreen(4),
                       transitionDuration: const Duration(seconds: 1),
                     ),
                   );
@@ -161,7 +161,7 @@ class _SideMenuState extends State<SideMenu> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => DrugsScreen(5),
+                      pageBuilder: (_, __, ___) => const DrugsScreen(5),
                       transitionDuration: const Duration(seconds: 0),
                     ),
                   );

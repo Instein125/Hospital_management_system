@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this, non_constant_identifier_names, use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -24,11 +26,8 @@ class _PatientsListState extends State<PatientsList> {
       var res = await http.post(Uri.parse(uri), body: {'id': ssn});
       var response = jsonDecode(res.body);
       if (response['success'] == 'true') {
-        print("Record deleted");
         getRecord();
-      } else {
-        print("Not deleted");
-      }
+      } else {}
     } catch (e) {
       print(e);
     }
@@ -52,18 +51,12 @@ class _PatientsListState extends State<PatientsList> {
     TextEditingController ageController = controllers[2]['Age :'];
     try {
       String uri = "http://localhost/hospital_MS_api/update_patient.php";
-      var res = await http.post(Uri.parse(uri), body: {
+      await http.post(Uri.parse(uri), body: {
         "SSN": primaryKey,
         "name": nameController.text,
         "address": addressController.text,
         "age": ageController.text,
       });
-      var response = jsonDecode(res.body);
-      if (response["success"] == "true") {
-        print("Updated");
-      } else {
-        print("some issues");
-      }
     } catch (e) {
       print(e);
     }
@@ -77,7 +70,6 @@ class _PatientsListState extends State<PatientsList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }

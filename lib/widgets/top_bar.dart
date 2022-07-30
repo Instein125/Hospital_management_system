@@ -61,13 +61,13 @@ class _TopBarState extends State<TopBar> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getDoctorCount();
     getPatientCount();
     getPharmacyCount();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 70,
@@ -77,7 +77,7 @@ class _TopBarState extends State<TopBar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Text(
               widget.title,
               style: const TextStyle(
@@ -101,7 +101,7 @@ class _TopBarState extends State<TopBar> {
                     ),
                     Text(
                       "$doctorCount",
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),

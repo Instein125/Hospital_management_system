@@ -37,11 +37,11 @@ class _ContractsListState extends State<ContractsList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListView(controller: ScrollController(), children: [
       DataTable(

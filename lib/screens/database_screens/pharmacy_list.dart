@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_this, non_constant_identifier_names
+// ignore_for_file: unnecessary_this, non_constant_identifier_names, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -27,11 +27,8 @@ class _PharmacyListState extends State<PharmacyList> {
       var res = await http.post(Uri.parse(uri), body: {'id': id});
       var response = jsonDecode(res.body);
       if (response['success'] == 'true') {
-        print("Record deleted");
         getRecord();
-      } else {
-        print("Not deleted");
-      }
+      } else {}
     } catch (e) {
       print(e);
     }
@@ -61,12 +58,6 @@ class _PharmacyListState extends State<PharmacyList> {
         "address": addressController.text,
         "Ph_number": phnumberController.text,
       });
-      var response = jsonDecode(res.body);
-      if (response["success"] == "true") {
-        print("Updated");
-      } else {
-        print("some issues");
-      }
     } catch (e) {
       print(e);
     }
@@ -92,18 +83,12 @@ class _PharmacyListState extends State<PharmacyList> {
     } else {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_sell.php";
-        var res = await http.post(Uri.parse(uri), body: {
+        await http.post(Uri.parse(uri), body: {
           "Phar_ID": primaryKey,
           "Trade_name": drugController.text,
           "Price": priceController.text,
           "Quantity": quantityController.text,
         });
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Updated");
-        } else {
-          print("some issues");
-        }
       } catch (e) {
         ScaffoldMessenger.of(context)
             .showSnackBar(errorMessage("Drug is not available!!"));
@@ -141,11 +126,11 @@ class _PharmacyListState extends State<PharmacyList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListView(controller: ScrollController(), children: [
       DataTable(

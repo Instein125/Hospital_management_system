@@ -1,7 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +16,7 @@ class DrugsScreen extends StatefulWidget {
   static const routeName = '/drugs_screen';
   final int selectedIndex;
 
-  DrugsScreen(this.selectedIndex);
+  const DrugsScreen(this.selectedIndex);
 
   @override
   State<DrugsScreen> createState() => _DrugsScreenState();
@@ -53,7 +52,7 @@ class _DrugsScreenState extends State<DrugsScreen> {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_drug.php";
 
-        var res = await http.post(Uri.parse(uri), body: {
+        await http.post(Uri.parse(uri), body: {
           "Trade_name": tradenameController.text,
           "Formula": formulaController.text,
         });
@@ -61,12 +60,6 @@ class _DrugsScreenState extends State<DrugsScreen> {
           tradenameController.text = '';
           formulaController.text = '';
         });
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Record Inserted");
-        } else {
-          print("Record not inserted");
-        }
       } catch (e) {
         print(e);
       }
@@ -124,7 +117,7 @@ class _DrugsScreenState extends State<DrugsScreen> {
                             insertRecord,
                             cancelButton,
                           ),
-                          DrugsStore(),
+                          const DrugsStore(),
                         ]),
                       ],
                     ),

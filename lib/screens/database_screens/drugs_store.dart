@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this, non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -29,11 +31,11 @@ class _DrugsStoreState extends State<DrugsStore> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListView(controller: ScrollController(), children: [
       DataTable(

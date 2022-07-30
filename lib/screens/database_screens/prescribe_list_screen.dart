@@ -1,15 +1,16 @@
-// ignore_for_file: deprecated_member_use, non_constant_identifier_names
+// ignore_for_file: deprecated_member_use, non_constant_identifier_names, use_key_in_widget_constructors
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hospital_system/screens/doctors_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class PrescribeList extends StatefulWidget {
   final String docSSN;
 
-  PrescribeList(this.docSSN);
+  const PrescribeList(this.docSSN);
 
   @override
   State<PrescribeList> createState() => _PrescribeListState();
@@ -21,7 +22,6 @@ class _PrescribeListState extends State<PrescribeList> {
   int? sortColumnIndex;
 
   bool isAscending = false;
-  static int decision = 0;
 
   Future<void> getRecord() async {
     String uri = "http://localhost/hospital_MS_api/prescribe.php";
@@ -51,12 +51,6 @@ class _PrescribeListState extends State<PrescribeList> {
         "Prescribe_date": date,
         "Quantity": quantity,
       });
-      var response = jsonDecode(res.body);
-      if (response["success"] == "true") {
-        print("Updated");
-      } else {
-        print("some issues");
-      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Container(
@@ -85,7 +79,6 @@ class _PrescribeListState extends State<PrescribeList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getRecord();
     super.initState();
   }
@@ -148,6 +141,22 @@ class _PrescribeListState extends State<PrescribeList> {
         rows: patientsList.map((e) {
           return CreateDataRow(e);
         }).toList(),
+      ),
+      IconButton(
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (_, __, ___) => DoctorsScreen(1),
+              transitionDuration: const Duration(seconds: 0),
+            ),
+          );
+        },
+        icon: const Icon(
+          Icons.logout,
+          size: 32,
+        ),
+        color: Colors.red,
+        hoverColor: Colors.red[200],
       ),
     ]);
   }

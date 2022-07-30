@@ -15,7 +15,7 @@ class CompaniesScreen extends StatefulWidget {
   static const routeName = '/companies_screen';
   final int selectedIndex;
 
-  CompaniesScreen(this.selectedIndex);
+  const CompaniesScreen(this.selectedIndex);
 
   @override
   State<CompaniesScreen> createState() => _CompaniesScreenState();
@@ -51,7 +51,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_company.php";
 
-        var res = await http.post(Uri.parse(uri), body: {
+        await http.post(Uri.parse(uri), body: {
           "name": nameController.text,
           "Ph_number": phnumberController.text,
         });
@@ -59,12 +59,6 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
           nameController.text = '';
           phnumberController.text = '';
         });
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Record Inserted");
-        } else {
-          print("Record not inserted");
-        }
       } catch (e) {
         print(e);
       }
@@ -73,7 +67,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
 
   dynamic cancelButton() => Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => CompaniesScreen(4),
+          pageBuilder: (_, __, ___) => const CompaniesScreen(4),
           transitionDuration: const Duration(seconds: 0),
         ),
       );

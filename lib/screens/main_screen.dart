@@ -93,7 +93,7 @@ class MainScreen extends StatelessWidget {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        CompaniesScreen(4),
+                                        const CompaniesScreen(4),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),
@@ -103,7 +103,8 @@ class MainScreen extends StatelessWidget {
                                   Icons.abc, 'assets/icons/medicine.png', () {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => DrugsScreen(5),
+                                    pageBuilder: (_, __, ___) =>
+                                        const DrugsScreen(5),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ),

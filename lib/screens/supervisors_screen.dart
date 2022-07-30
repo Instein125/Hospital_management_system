@@ -117,7 +117,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_supervisor.php";
 
-        var res = await http.post(Uri.parse(uri), body: {
+        await http.post(Uri.parse(uri), body: {
           "supervisor_ID": widget.primaryValue,
           "name": nameController.text,
           "Address": addressController.text,
@@ -125,13 +125,6 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
         setState(() {
           _writeJson(count);
         });
-
-        var response = jsonDecode(res.body);
-        if (response["success"] == "true") {
-          print("Record Inserted");
-        } else {
-          print("Record not inserted");
-        }
       } catch (e) {
         print(e);
       }
@@ -145,6 +138,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
         ),
       );
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -176,7 +170,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
                           'Supervisors list',
                           'Add supervisor',
                         ], [
-                          SupervisorsList(),
+                          const SupervisorsList(),
                           AddScreen(
                             [
                               {'Name : ': nameController},

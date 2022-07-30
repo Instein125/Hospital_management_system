@@ -19,6 +19,7 @@ class PrescribeScreen extends StatefulWidget {
 }
 
 class _PrescribeScreenState extends State<PrescribeScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
