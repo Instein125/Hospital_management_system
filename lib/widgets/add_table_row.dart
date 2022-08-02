@@ -179,7 +179,10 @@ class _AddTableRowState extends State<AddTableRow> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RaisedButton(
-          onPressed: (() => widget.insertRecord(context)),
+          onPressed: (() {
+            value = null;
+            widget.insertRecord(context);
+          }),
           color: Theme.of(context).accentColor,
           hoverColor: Theme.of(context).primaryColor,
           child: const Text(
