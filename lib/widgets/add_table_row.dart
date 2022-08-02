@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use, non_constant_identifier_names
 
 import 'dart:convert';
 

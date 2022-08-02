@@ -51,6 +51,7 @@ class _PrescribeListState extends State<PrescribeList> {
         "Prescribe_date": date,
         "Quantity": quantity,
       });
+      jsonDecode(res.body);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Container(

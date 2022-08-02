@@ -51,11 +51,12 @@ class _CompaniesListState extends State<CompaniesList> {
 
     try {
       String uri = "http://localhost/hospital_MS_api/update_company.php";
-      await http.post(Uri.parse(uri), body: {
+      var res = await http.post(Uri.parse(uri), body: {
         "name": nameController.text,
         "Ph_number": phnumberController.text,
         "oldName": primaryKey,
       });
+      jsonDecode(res.body);
     } catch (e) {
       print(e);
     }

@@ -52,7 +52,7 @@ class _PharmacyListState extends State<PharmacyList> {
     TextEditingController phnumberController = controllers[2]['Phone number :'];
     try {
       String uri = "http://localhost/hospital_MS_api/update_pharmacy.php";
-      var res = await http.post(Uri.parse(uri), body: {
+      await http.post(Uri.parse(uri), body: {
         "Phar_ID": primaryKey,
         "name": nameController.text,
         "address": addressController.text,
@@ -83,15 +83,15 @@ class _PharmacyListState extends State<PharmacyList> {
     } else {
       try {
         String uri = "http://localhost/hospital_MS_api/insert_sell.php";
-        await http.post(Uri.parse(uri), body: {
+        var res = await http.post(Uri.parse(uri), body: {
           "Phar_ID": primaryKey,
           "Trade_name": drugController.text,
           "Price": priceController.text,
           "Quantity": quantityController.text,
         });
+        jsonDecode(res.body);
       } catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(errorMessage("Drug is not available!!"));
+        print(e);
       }
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
@@ -223,6 +223,9 @@ class _PharmacyListState extends State<PharmacyList> {
           children: [
             IconButton(
                 onPressed: () {
+                  nameController.text = pharmacy['Name'];
+                  addressController.text = pharmacy['Address'];
+                  phnumberController.text = pharmacy['Ph_number'];
                   updateRecordDialog(
                       context,
                       [
